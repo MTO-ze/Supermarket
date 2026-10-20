@@ -1,0 +1,2136 @@
+<!DOCTYPE html>
+<html lang="en" class="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nammude Supermarket / നമ്മുടെ സൂപ്പർമാർക്കറ്റ്</title>
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <!-- Google Fonts: Plus Jakarta Sans, Outfit, Manjari (Malayalam support) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manjari:wght@400;700&family=Outfit:wght@400;600;700;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', '"Manjari"', 'sans-serif'],
+            display: ['"Outfit"', '"Manjari"', 'sans-serif'],
+            malayalam: ['"Manjari"', 'sans-serif']
+          },
+          colors: {
+            brand: {
+              50: '#ecfdf5',
+              100: '#d1fae5',
+              200: '#a7f3d0',
+              500: '#10b981',
+              600: '#059669',
+              700: '#047857',
+              800: '#065f46',
+              900: '#064e3b'
+            }
+          },
+          animation: {
+            'blob-float': 'blobFloat 18s infinite alternate ease-in-out',
+            'pulse-subtle': 'pulseSubtle 2.5s infinite ease-in-out'
+          },
+          keyframes: {
+            blobFloat: {
+              '0%': { transform: 'translate(0px, 0px) scale(1)' },
+              '50%': { transform: 'translate(25px, -30px) scale(1.08)' },
+              '100%': { transform: 'translate(-20px, 20px) scale(0.96)' }
+            },
+            pulseSubtle: {
+              '0%, 100%': { opacity: 1 },
+              '50%': { opacity: 0.85 }
+            }
+          }
+        }
+      }
+    };
+  </script>
+
+  <style>
+    /* Light Mode Glassmorphism */
+    .light .glass-card {
+      background: rgba(255, 255, 255, 0.92);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(226, 232, 240, 0.9);
+      box-shadow: 0 10px 25px -4px rgba(15, 23, 42, 0.05);
+    }
+    .light .glass-header {
+      background: rgba(255, 255, 255, 0.94);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(226, 232, 240, 0.95);
+    }
+    .light .glass-input {
+      background: #ffffff;
+      border: 1px solid #cbd5e1;
+      color: #0f172a;
+    }
+
+    /* Dark Mode Luxury Midnight Glassmorphism */
+    .dark .glass-card {
+      background: rgba(15, 23, 42, 0.88);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(51, 65, 85, 0.7);
+      box-shadow: 0 10px 25px -4px rgba(0, 0, 0, 0.5);
+    }
+    .dark .glass-header {
+      background: rgba(15, 23, 42, 0.94);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(51, 65, 85, 0.8);
+    }
+    .dark .glass-input {
+      background: rgba(30, 41, 59, 0.9);
+      border: 1px solid #475569;
+      color: #f8fafc;
+    }
+
+    .glass-input:focus {
+      outline: none;
+      border-color: #059669;
+      box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.2);
+    }
+
+    /* FSSAI Standard Food Badges */
+    .fssai-box {
+      width: 17px;
+      height: 17px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 4px;
+      flex-shrink: 0;
+      background: #ffffff;
+    }
+    .fssai-veg {
+      border: 2px solid #16a34a;
+    }
+    .fssai-veg-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 9999px;
+      background-color: #16a34a;
+    }
+    .fssai-nonveg {
+      border: 2px solid #dc2626;
+    }
+    .fssai-nonveg-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 9999px;
+      background-color: #dc2626;
+    }
+
+    /* Ambient Liquid Plasma Blobs */
+    .liquid-blob {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(85px);
+      pointer-events: none;
+      z-index: 0;
+      transition: opacity 0.5s ease;
+    }
+
+    /* Scrollbars */
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #94a3b8;
+      border-radius: 9999px;
+    }
+  </style>
+</head>
+<body class="bg-[#f8fafc] dark:bg-[#090d16] text-slate-800 dark:text-slate-100 min-h-screen relative overflow-x-hidden transition-colors duration-300 font-sans">
+
+  <!-- ================= ADAPTIVE LIQUID BACKGROUND BLOBS ================= -->
+  <div class="fixed inset-0 overflow-hidden pointer-events-none -z-10">
+    <div class="liquid-blob w-[500px] h-[500px] bg-gradient-to-tr from-emerald-300/40 to-teal-200/40 dark:from-emerald-900/30 dark:to-teal-800/25 -top-20 -left-20 animate-blob-float"></div>
+    <div class="liquid-blob w-[520px] h-[520px] bg-gradient-to-br from-amber-200/35 to-emerald-200/30 dark:from-amber-950/20 dark:to-emerald-900/20 top-1/3 -right-24 animate-blob-float" style="animation-delay: -5s;"></div>
+    <div class="liquid-blob w-[450px] h-[450px] bg-gradient-to-tr from-cyan-200/35 to-emerald-200/30 dark:from-cyan-950/20 dark:to-teal-900/25 -bottom-20 left-1/3 animate-blob-float" style="animation-delay: -10s;"></div>
+    <div class="absolute inset-0 bg-[radial-gradient(#cbd5e1_1px,transparent_1px)] dark:bg-[radial-gradient(#1e293b_1px,transparent_1px)] [background-size:20px_20px] opacity-40"></div>
+  </div>
+
+  <!-- ================= TOP TICKER ================= -->
+  <div class="bg-gradient-to-r from-emerald-600 via-teal-600 to-emerald-700 text-white text-xs sm:text-sm py-2 px-4 text-center flex items-center justify-center gap-2 font-medium shadow-sm">
+    <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-white/20 text-white font-black text-[10px] uppercase tracking-wider">
+      <span class="w-1.5 h-1.5 rounded-full bg-amber-300 animate-ping"></span> <span data-i18n="tickerBadge">OFFER</span>
+    </span>
+    <span data-i18n="tickerText">Super Offer! Orders ₹499-nu mukalil aayal <strong>Free Nadan Fast Delivery</strong>!</span>
+  </div>
+
+  <!-- ================= NAVBAR ================= -->
+  <header class="sticky top-0 z-40 glass-header">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-20 gap-3">
+        
+        <!-- Logo -->
+        <div class="flex items-center gap-3">
+          <div class="w-11 h-11 rounded-2xl bg-gradient-to-tr from-emerald-600 to-teal-500 flex items-center justify-center shadow-lg shadow-emerald-600/25 text-white font-extrabold text-2xl font-display transform hover:rotate-3 transition">
+            <i data-lucide="shopping-bag" class="w-6 h-6"></i>
+          </div>
+          <div>
+            <div class="flex items-center gap-2">
+              <h1 class="text-xl sm:text-2xl font-black font-display tracking-tight text-slate-900 dark:text-white" id="mainBrandTitle">
+                Nammude <span class="text-emerald-600 dark:text-emerald-400">Supermarket</span>
+              </h1>
+              <span class="hidden sm:inline-block px-2 py-0.5 text-[10px] bg-emerald-100 dark:bg-emerald-950 text-emerald-800 dark:text-emerald-300 rounded-full border border-emerald-300 dark:border-emerald-800 font-bold uppercase tracking-wider" data-i18n="badgeFresh">
+                100% Fresh
+              </span>
+            </div>
+            <p class="text-xs text-slate-500 dark:text-slate-400 font-medium" data-i18n="tagline">Aadambaram Illa, Nalla Fresh Sadhanangal Veettil Ethum!</p>
+          </div>
+        </div>
+
+        <!-- Location Dropdown (Desktop) -->
+        <div class="hidden lg:flex items-center gap-2.5 bg-slate-50 dark:bg-slate-800/80 px-4 py-2.5 rounded-2xl border border-slate-200 dark:border-slate-700 transition">
+          <div class="w-8 h-8 rounded-xl bg-emerald-100 dark:bg-emerald-900/60 text-emerald-700 dark:text-emerald-300 flex items-center justify-center shrink-0">
+            <i data-lucide="map-pin" class="w-4 h-4"></i>
+          </div>
+          <div class="text-left text-xs">
+            <p class="text-slate-500 dark:text-slate-400 font-medium flex items-center gap-1">
+              <span data-i18n="deliverySpotLabel">Delivery Spot:</span>
+              <select id="headerLocationSelect" onchange="updateLocation(this.value)" class="bg-transparent text-emerald-700 dark:text-emerald-400 font-black focus:outline-none cursor-pointer">
+                <option value="Malappuram Town">Malappuram Town</option>
+                <option value="Manjeri">Manjeri</option>
+                <option value="Kavanur">Kavanur</option>
+                <option value="Kondotty">Kondotty</option>
+                <option value="Perinthalmanna">Perinthalmanna</option>
+                <option value="Custom Location">+ Custom Location</option>
+              </select>
+            </p>
+            <p class="text-[11px] text-slate-700 dark:text-slate-200 font-bold" id="headerEtaText">
+              ⚡ 20 Mins (Charge: ₹25)
+            </p>
+          </div>
+        </div>
+
+        <!-- Header Actions: Lang switch, Dark mode, Staff Login, Cart -->
+        <div class="flex items-center gap-2 sm:gap-2.5">
+          <!-- Language Toggle Button -->
+          <button onclick="toggleLanguage()" class="px-3 py-2 rounded-xl text-xs font-black bg-white dark:bg-slate-800 text-emerald-700 dark:text-emerald-400 border border-slate-200 dark:border-slate-700 shadow-sm flex items-center gap-1.5 transition active:scale-95" title="Switch Language">
+            <i data-lucide="languages" class="w-4 h-4"></i>
+            <span id="currentLangLabel">മലയാളം</span>
+          </button>
+
+          <!-- Dark / Light Mode Toggle Button -->
+          <button onclick="toggleDarkMode()" class="p-2.5 rounded-xl bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-700 shadow-sm hover:text-emerald-600 dark:hover:text-emerald-400 transition active:scale-95" title="Toggle Dark/Light Mode">
+            <i data-lucide="moon" id="themeIcon" class="w-4 h-4"></i>
+          </button>
+
+          <!-- Staff Login Trigger Button -->
+          <button onclick="openStaffModal()" class="px-3 sm:px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-700 shadow-sm flex items-center gap-1.5 transition active:scale-95">
+            <i data-lucide="shield" class="w-4 h-4 text-emerald-600 dark:text-emerald-400"></i>
+            <span class="hidden sm:inline" data-i18n="staffBtn">Staff Login</span>
+            <span class="sm:hidden">Staff</span>
+          </button>
+
+          <!-- Cart Drawer Button -->
+          <button onclick="toggleCartDrawer(true)" class="relative px-3.5 sm:px-4 py-2.5 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-extrabold text-xs sm:text-sm flex items-center gap-2 shadow-lg shadow-emerald-600/20 active:scale-95 transition">
+            <i data-lucide="shopping-cart" class="w-4 h-4 text-white"></i>
+            <span class="hidden xs:inline" data-i18n="cartTitle">Cart</span>
+            <span id="cartCountBadge" class="bg-white text-emerald-700 font-black text-xs px-2 py-0.5 rounded-full shadow-sm min-w-[20px] text-center">
+              0
+            </span>
+          </button>
+        </div>
+
+      </div>
+    </div>
+  </header>
+
+  <!-- ================= MOBILE LOCATION BAR ================= -->
+  <div class="lg:hidden bg-white/90 dark:bg-slate-900/90 backdrop-blur-md px-4 py-2 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between text-xs shadow-sm">
+    <div class="flex items-center gap-2">
+      <i data-lucide="map-pin" class="w-4 h-4 text-emerald-600 shrink-0"></i>
+      <span class="text-slate-500 dark:text-slate-400 font-medium" data-i18n="spotShort">Spot:</span>
+      <select id="mobileLocationSelect" onchange="updateLocation(this.value)" class="bg-slate-100 dark:bg-slate-800 text-emerald-700 dark:text-emerald-400 font-bold text-xs rounded-lg px-2 py-1 border border-slate-300 dark:border-slate-700 focus:outline-none">
+        <option value="Malappuram Town">Malappuram Town</option>
+        <option value="Manjeri">Manjeri</option>
+        <option value="Kavanur">Kavanur</option>
+        <option value="Kondotty">Kondotty</option>
+        <option value="Perinthalmanna">Perinthalmanna</option>
+        <option value="Custom Location">+ Custom Spot</option>
+      </select>
+    </div>
+    <span id="mobileEtaBadge" class="bg-emerald-100 dark:bg-emerald-950 text-emerald-800 dark:text-emerald-300 font-black px-2.5 py-0.5 rounded-full border border-emerald-300 dark:border-emerald-800 text-[11px]">
+      ⚡ 20 Mins
+    </span>
+  </div>
+
+  <!-- ================= HERO SECTION ================= -->
+  <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 pb-2">
+    <div class="relative rounded-3xl overflow-hidden bg-gradient-to-br from-white via-emerald-50/50 to-teal-50/70 dark:from-slate-900 dark:via-slate-800/90 dark:to-emerald-950/40 border border-slate-200/90 dark:border-slate-800 p-6 sm:p-10 shadow-xl">
+      <div class="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+        
+        <div class="lg:col-span-8 space-y-4">
+          <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-100 dark:bg-emerald-950/80 border border-emerald-300 dark:border-emerald-800 text-emerald-800 dark:text-emerald-300 text-xs font-black">
+            <i data-lucide="sparkles" class="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400"></i>
+            <span data-i18n="heroPill">100% Nadan Quality & Pettannu Delivery</span>
+          </div>
+
+          <h2 class="text-3xl sm:text-5xl font-black font-display tracking-tight text-slate-900 dark:text-white leading-tight" data-i18n="heroHeading">
+            Ivide Ellaam Undu! <br class="hidden sm:inline" />
+            <span class="bg-gradient-to-r from-emerald-600 via-teal-600 to-emerald-700 dark:from-emerald-400 dark:to-teal-300 bg-clip-text text-transparent">
+              Fresh Thakkali, Pacha Curry, Meen & Nadan Irachi
+            </span>
+          </h2>
+
+          <p class="text-sm sm:text-base text-slate-600 dark:text-slate-300 max-w-2xl font-normal leading-relaxed" data-i18n="heroSubheading">
+            Market-il poyi velichavatta nillanda! Nammude app vazhi ippo thanne order cheyyu. Fresh farm veggies, hydroponic items, ready-to-cook chicken tikka & cut meats 30 minutes-il veettilethikkam!
+          </p>
+
+          <!-- Badges -->
+          <div class="flex flex-wrap items-center gap-3 pt-2">
+            <div class="flex items-center gap-3 bg-white/90 dark:bg-slate-800/90 border border-slate-200 dark:border-slate-700 px-4 py-2.5 rounded-2xl shadow-sm">
+              <i data-lucide="zap" class="w-5 h-5 text-amber-500"></i>
+              <div>
+                <p class="text-[10px] text-slate-400 uppercase font-black tracking-wider" data-i18n="badgeEtaTitle">Fast Delivery</p>
+                <p class="text-xs sm:text-sm font-black text-slate-800 dark:text-slate-100" id="heroEtaText">Delivery within 20 Mins</p>
+              </div>
+            </div>
+
+            <div class="flex items-center gap-3 bg-white/90 dark:bg-slate-800/90 border border-slate-200 dark:border-slate-700 px-4 py-2.5 rounded-2xl shadow-sm">
+              <i data-lucide="badge-percent" class="w-5 h-5 text-emerald-600 dark:text-emerald-400"></i>
+              <div>
+                <p class="text-[10px] text-slate-400 uppercase font-black tracking-wider" data-i18n="badgeOfferTitle">Free Delivery</p>
+                <p class="text-xs sm:text-sm font-black text-slate-800 dark:text-slate-100" data-i18n="badgeOfferDesc">Min ₹499 = Zero Delivery Charge</p>
+              </div>
+            </div>
+
+            <div class="flex items-center gap-3 bg-white/90 dark:bg-slate-800/90 border border-slate-200 dark:border-slate-700 px-4 py-2.5 rounded-2xl shadow-sm">
+              <i data-lucide="shield-check" class="w-5 h-5 text-teal-600 dark:text-teal-400"></i>
+              <div>
+                <p class="text-[10px] text-slate-400 uppercase font-black tracking-wider" data-i18n="badgeFssaiTitle">FSSAI Certified</p>
+                <p class="text-xs sm:text-sm font-black text-slate-800 dark:text-slate-100" data-i18n="badgeFssaiDesc">100% Hygienic & Clean Meat</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Hero graphic card with realistic photo -->
+        <div class="lg:col-span-4 flex justify-center">
+          <div class="w-full max-w-xs p-5 rounded-3xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-center shadow-xl relative">
+            <div class="w-full h-40 rounded-2xl overflow-hidden mb-3.5 relative shadow-inner">
+              <img 
+                src="https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=700&q=80" 
+                alt="Fresh Supermarket produce" 
+                class="w-full h-full object-cover transform hover:scale-105 transition duration-500" 
+              />
+              <span class="absolute top-2.5 left-2.5 bg-emerald-600 text-white text-[10px] font-black uppercase px-2 py-0.5 rounded-md shadow" data-i18n="freshBadge">
+                Fresh Stock
+              </span>
+            </div>
+            <h4 class="text-base font-extrabold text-slate-900 dark:text-white" data-i18n="heroBannerTitle">Kattal Fresh Nadan Stock!</h4>
+            <p class="text-xs text-slate-500 dark:text-slate-400 mt-1 mb-3.5" data-i18n="heroBannerSubtitle">Daily morning farm-picked fresh items arrived!</p>
+            <button onclick="scrollToProducts()" class="w-full py-2.5 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-extrabold text-xs rounded-xl shadow-md active:scale-95 transition flex items-center justify-center gap-1.5">
+              <span data-i18n="heroShopBtn">Items Nokki Vaangam</span>
+              <i data-lucide="arrow-down" class="w-4 h-4"></i>
+            </button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= SEARCH, FILTER & CATEGORIES ================= -->
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-6" id="productsSection">
+    
+    <!-- Search & Veg/Non-veg Filter Bar -->
+    <div class="flex flex-col md:flex-row gap-4 items-stretch md:items-center justify-between glass-card p-4 rounded-2xl">
+      <!-- Search -->
+      <div class="relative flex-1">
+        <i data-lucide="search" class="w-5 h-5 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2"></i>
+        <input 
+          type="text" 
+          id="searchInput" 
+          oninput="handleSearch(this.value)" 
+          placeholder="Sadhanam thirayoo (Eg: Thakkali, Kozhi, Beef, Fish, Lettuce)..." 
+          class="w-full glass-input rounded-xl pl-11 pr-4 py-2.5 text-sm placeholder:text-slate-400"
+        />
+      </div>
+
+      <!-- Veg / Non-Veg Diet Filter Buttons -->
+      <div class="flex items-center gap-2 overflow-x-auto pb-1 md:pb-0">
+        <button 
+          onclick="setDietFilter('all')" 
+          id="diet-all" 
+          class="diet-filter-btn px-3.5 py-2 rounded-xl text-xs font-black border transition whitespace-nowrap bg-emerald-600 text-white border-emerald-600 shadow-sm">
+          <span data-i18n="dietAll">Ellaam (All Items)</span>
+        </button>
+        <button 
+          onclick="setDietFilter('veg')" 
+          id="diet-veg" 
+          class="diet-filter-btn px-3.5 py-2 rounded-xl text-xs font-black border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 hover:border-emerald-500 text-slate-700 dark:text-slate-200 transition flex items-center gap-1.5 whitespace-nowrap">
+          <span class="fssai-box fssai-veg"><span class="fssai-veg-dot"></span></span>
+          <span data-i18n="dietVeg">Only Veg</span>
+        </button>
+        <button 
+          onclick="setDietFilter('non-veg')" 
+          id="diet-non-veg" 
+          class="diet-filter-btn px-3.5 py-2 rounded-xl text-xs font-black border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 hover:border-red-500 text-slate-700 dark:text-slate-200 transition flex items-center gap-1.5 whitespace-nowrap">
+          <span class="fssai-box fssai-nonveg"><span class="fssai-nonveg-dot"></span></span>
+          <span data-i18n="dietNonVeg">Only Non-Veg</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Category Tabs -->
+    <div class="flex items-center gap-2.5 overflow-x-auto pb-2 scrollbar-none" id="categoryChips">
+      <!-- Injected via JavaScript -->
+    </div>
+
+    <!-- Product Grid Header -->
+    <div class="flex items-center justify-between text-xs sm:text-sm text-slate-500 dark:text-slate-400 pt-1">
+      <p id="itemCountDisplay">Loading items...</p>
+      <div class="flex items-center gap-2">
+        <span class="font-medium" data-i18n="sortLabel">Sort Cheyyu:</span>
+        <select id="sortSelect" onchange="handleSort(this.value)" class="bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-200 rounded-lg px-2.5 py-1.5 border border-slate-300 dark:border-slate-700 text-xs focus:outline-none focus:border-emerald-600 shadow-sm font-bold">
+          <option value="featured" data-i18n="sortFeatured">Featured First</option>
+          <option value="price-low" data-i18n="sortLow">Price: Kuranja Rate First</option>
+          <option value="price-high" data-i18n="sortHigh">Price: Kooduthal Rate First</option>
+          <option value="name" data-i18n="sortName">Name (A-Z)</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Product Grid Container -->
+    <div id="productGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+      <!-- Injected via JavaScript -->
+    </div>
+
+    <!-- Empty State -->
+    <div id="emptyState" class="hidden text-center py-16 glass-card rounded-3xl">
+      <div class="text-5xl mb-3">🔍</div>
+      <h3 class="text-lg font-black text-slate-800 dark:text-white" data-i18n="emptyTitle">Ayyoda! Sadhanam Onnum Kandeella</h3>
+      <p class="text-xs sm:text-sm text-slate-500 dark:text-slate-400 mt-1 max-w-sm mx-auto" data-i18n="emptyDesc">
+        Ningal search cheytha item stock-il illa or spelling thettanu. Vere ethilum search cheythu nokkoo!
+      </p>
+      <button onclick="resetFilters()" class="mt-4 px-4 py-2 bg-emerald-600 text-white font-bold text-xs rounded-xl shadow hover:bg-emerald-500 transition" data-i18n="emptyReset">
+        Reset Filter & Search
+      </button>
+    </div>
+
+  </main>
+
+  <!-- ================= FLYOUT SHOPPING CART DRAWER ================= -->
+  <div id="cartDrawerBackdrop" onclick="toggleCartDrawer(false)" class="fixed inset-0 z-50 bg-slate-900/50 backdrop-blur-sm hidden transition-opacity"></div>
+  
+  <aside id="cartDrawer" class="fixed top-0 right-0 h-full w-full max-w-md bg-white dark:bg-slate-900 z-50 border-l border-slate-200 dark:border-slate-800 flex flex-col transform translate-x-full transition-transform duration-300 ease-out shadow-2xl">
+    
+    <!-- Cart Header -->
+    <div class="p-5 border-b border-slate-100 dark:border-slate-800 flex items-center justify-between bg-slate-50/70 dark:bg-slate-800/50">
+      <div class="flex items-center gap-2.5">
+        <div class="w-9 h-9 rounded-xl bg-emerald-100 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-300 flex items-center justify-center">
+          <i data-lucide="shopping-basket" class="w-5 h-5"></i>
+        </div>
+        <div>
+          <h3 class="text-base font-black text-slate-900 dark:text-white" data-i18n="cartTitle">Nammude Cart</h3>
+          <p class="text-xs text-slate-500 dark:text-slate-400" id="cartSubtitle">0 Items select cheythu</p>
+        </div>
+      </div>
+      <button onclick="toggleCartDrawer(false)" class="p-2 rounded-xl text-slate-400 hover:text-slate-700 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800 transition">
+        <i data-lucide="x" class="w-5 h-5"></i>
+      </button>
+    </div>
+
+    <!-- Cart Location Notice -->
+    <div class="bg-emerald-50/70 dark:bg-emerald-950/40 px-5 py-2.5 border-b border-emerald-100 dark:border-emerald-900 flex items-center justify-between text-xs">
+      <span class="text-slate-600 dark:text-slate-300 flex items-center gap-1.5 font-medium">
+        <i data-lucide="truck" class="w-4 h-4 text-emerald-600 dark:text-emerald-400"></i>
+        <span data-i18n="deliverToLabel">Deliver to:</span> <strong class="text-emerald-800 dark:text-emerald-300 font-bold" id="cartLocName">Malappuram Town</strong>
+      </span>
+      <span class="text-emerald-700 dark:text-emerald-400 font-black" id="cartEtaDuration">⚡ 20 Mins</span>
+    </div>
+
+    <!-- Cart Items Scroll List -->
+    <div id="cartItemsList" class="flex-1 overflow-y-auto p-5 space-y-3">
+      <!-- Rendered via JavaScript -->
+    </div>
+
+    <!-- Bill Summary, Payment Mode & Checkout Section -->
+    <div class="p-5 border-t border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-800/60 space-y-3.5">
+      
+      <!-- Payment Mode Selector -->
+      <div class="space-y-1.5">
+        <label class="block text-xs font-black text-slate-700 dark:text-slate-300" data-i18n="selectPaymentMode">
+          Payment Mode (പണം നൽകുന്ന രീതി):
+        </label>
+        <div class="grid grid-cols-2 gap-2">
+          <label class="flex items-center gap-2 p-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 cursor-pointer hover:border-emerald-500 transition text-xs font-bold text-slate-800 dark:text-slate-200">
+            <input type="radio" name="paymentOption" value="COD" checked class="text-emerald-600 focus:ring-emerald-500" />
+            <span data-i18n="payCod">Cash on Delivery (COD)</span>
+          </label>
+          <label class="flex items-center gap-2 p-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 cursor-pointer hover:border-emerald-500 transition text-xs font-bold text-slate-800 dark:text-slate-200">
+            <input type="radio" name="paymentOption" value="ONLINE" class="text-emerald-600 focus:ring-emerald-500" />
+            <span data-i18n="payNowOnline">Pay Now (UPI/Card)</span>
+          </label>
+        </div>
+      </div>
+
+      <!-- Full Breakdown Calculation -->
+      <div class="space-y-1.5 text-xs">
+        <div class="flex justify-between text-slate-600 dark:text-slate-300">
+          <span data-i18n="billSubtotal">Items Subtotal:</span>
+          <span class="font-bold text-slate-900 dark:text-white" id="cartSubtotal">₹0</span>
+        </div>
+        <div class="flex justify-between text-slate-600 dark:text-slate-300">
+          <span class="flex items-center gap-1">
+            <span data-i18n="billDelivery">Delivery Charge:</span>
+            <span class="text-[10px] text-slate-400" data-i18n="aboveFreeNotice">(₹499+ free)</span>
+          </span>
+          <span class="font-bold text-slate-900 dark:text-white" id="cartDeliveryCharge">₹25</span>
+        </div>
+        <div class="flex justify-between text-slate-600 dark:text-slate-300">
+          <span data-i18n="billPackaging">Eco Packing & Cover:</span>
+          <span class="font-bold text-slate-900 dark:text-white" id="cartPackingCharge">₹10</span>
+        </div>
+        <div class="flex justify-between text-slate-600 dark:text-slate-300">
+          <span data-i18n="billGst">Taxes (GST 5% included):</span>
+          <span class="font-bold text-slate-900 dark:text-white" id="cartGstFee">₹5</span>
+        </div>
+        
+        <!-- Grand Total Calculation Highlight -->
+        <div class="pt-2 border-t border-slate-200 dark:border-slate-700 flex justify-between text-sm sm:text-base font-extrabold text-slate-900 dark:text-white">
+          <span data-i18n="billGrandTotal">Aake Kodukkendathu (Grand Total):</span>
+          <span class="text-emerald-600 dark:text-emerald-400 font-display text-lg" id="cartTotalSum">₹0</span>
+        </div>
+      </div>
+
+      <!-- Action Buttons -->
+      <div class="grid grid-cols-2 gap-2.5 pt-1">
+        <button onclick="clearCart()" class="py-2.5 rounded-xl border border-rose-300 dark:border-rose-900 text-rose-600 dark:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-950/40 text-xs font-bold transition" data-i18n="clearCartBtn">
+          Clear Cart
+        </button>
+        <button onclick="handleCheckout()" id="checkoutBtn" class="py-2.5 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-extrabold text-xs transition flex items-center justify-center gap-1.5 shadow-md shadow-emerald-600/20 active:scale-95 disabled:opacity-50 disabled:pointer-events-none">
+          <span id="checkoutBtnLabel" data-i18n="checkoutBtnText">Order Place Cheyyu</span>
+          <i data-lucide="check-circle-2" class="w-4 h-4"></i>
+        </button>
+      </div>
+
+    </div>
+  </aside>
+
+  <!-- ================= DIGITAL RECEIPT / BILL MODAL ================= -->
+  <div id="receiptModal" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm hidden flex items-center justify-center p-4">
+    <div class="bg-white dark:bg-slate-900 w-full max-w-md rounded-3xl border border-slate-200 dark:border-slate-800 p-6 relative shadow-2xl max-h-[90vh] flex flex-col">
+      <div class="flex items-center justify-between border-b border-slate-100 dark:border-slate-800 pb-3">
+        <div class="flex items-center gap-2">
+          <span class="text-2xl">🧾</span>
+          <h3 class="text-base font-black text-slate-900 dark:text-white" data-i18n="billTitle">Digital Bill / Cash Receipt</h3>
+        </div>
+        <button onclick="closeReceiptModal()" class="text-slate-400 hover:text-slate-700 dark:hover:text-white p-1">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+
+      <!-- Receipt Content -->
+      <div id="printableReceiptArea" class="flex-1 overflow-y-auto py-4 space-y-4 text-xs font-mono text-slate-800 dark:text-slate-200">
+        <div class="text-center border-b border-dashed border-slate-300 dark:border-slate-700 pb-3">
+          <p class="font-black text-sm font-sans tracking-wide text-slate-900 dark:text-white uppercase" id="rcptHeaderBrand">Nammude Supermarket / നമ്മുടെ സൂപ്പർമാർക്കറ്റ്</p>
+          <p class="text-[11px] text-slate-500 dark:text-slate-400 font-sans">Kozhikode - Palakkad Highway, Malappuram</p>
+          <p class="text-[11px] text-emerald-600 dark:text-emerald-400 font-sans font-bold">Ph: +91 98470 12345 | GSTIN: 32AABCN1234D1Z9</p>
+          <div class="mt-2 text-[10px] text-slate-500 dark:text-slate-400 flex justify-between font-mono">
+            <span id="billInvoiceNo">INV: #NS-9831</span>
+            <span id="billDate">Date: 20-Oct-2026</span>
+          </div>
+        </div>
+
+        <!-- Receipt items list -->
+        <div class="space-y-1.5" id="receiptItemList">
+          <!-- Populated in JS -->
+        </div>
+
+        <!-- Receipt calculations -->
+        <div class="border-t border-dashed border-slate-300 dark:border-slate-700 pt-2 space-y-1">
+          <div class="flex justify-between">
+            <span data-i18n="billSubtotal">Subtotal:</span>
+            <span id="rcptSubtotal" class="font-bold">₹0</span>
+          </div>
+          <div class="flex justify-between">
+            <span data-i18n="billDelivery">Delivery Spot Fee:</span>
+            <span id="rcptDelivery" class="font-bold">₹0</span>
+          </div>
+          <div class="flex justify-between">
+            <span data-i18n="billPackaging">Eco Packing Cover:</span>
+            <span id="rcptPacking" class="font-bold">₹10</span>
+          </div>
+          <div class="flex justify-between">
+            <span data-i18n="billGst">Taxes (GST 5%):</span>
+            <span id="rcptGst" class="font-bold">₹5</span>
+          </div>
+          <div class="flex justify-between font-black text-sm text-emerald-600 dark:text-emerald-400 pt-1 border-t border-slate-200 dark:border-slate-700">
+            <span data-i18n="billGrandTotal">GRAND TOTAL:</span>
+            <span id="rcptGrandTotal">₹0</span>
+          </div>
+        </div>
+
+        <div class="bg-slate-50 dark:bg-slate-800 p-3 rounded-xl border border-slate-200 dark:border-slate-700 font-sans space-y-1 text-center">
+          <p class="text-xs text-slate-800 dark:text-slate-100 font-bold">Delivery Location: <span id="rcptSpot" class="text-emerald-700 dark:text-emerald-400">Malappuram</span></p>
+          <p class="text-[11px] text-slate-600 dark:text-slate-300">Payment Mode: <strong class="text-emerald-700 dark:text-emerald-400 font-bold" id="rcptPaymentMode">Cash on Delivery (COD)</strong></p>
+          <p class="text-[10px] text-amber-700 dark:text-amber-400 font-semibold italic mt-1" data-i18n="receiptFooterQuote">"Nanni, Veendum Varika! Nammude Nadan Fresh Supermarket!"</p>
+        </div>
+      </div>
+
+      <!-- Receipt Actions -->
+      <div class="flex flex-col sm:flex-row gap-2 pt-3 border-t border-slate-100 dark:border-slate-800">
+        <button onclick="copyReceiptDetails()" class="flex-1 py-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-xs font-bold text-slate-700 dark:text-slate-200 flex items-center justify-center gap-1.5 transition">
+          <i data-lucide="copy" class="w-3.5 h-3.5"></i> <span data-i18n="copyBillBtn">Copy Bill</span>
+        </button>
+        <button onclick="shareOnWhatsApp()" class="flex-1 py-2.5 rounded-xl bg-green-600 hover:bg-green-700 text-white text-xs font-bold flex items-center justify-center gap-1.5 transition shadow-sm">
+          <i data-lucide="share-2" class="w-3.5 h-3.5"></i> <span>WhatsApp Order</span>
+        </button>
+        <button onclick="openLiveTrackingAfterCheckout()" class="flex-1 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs flex items-center justify-center gap-1.5 shadow-md transition">
+          <i data-lucide="navigation" class="w-3.5 h-3.5"></i> <span data-i18n="trackDeliveryBtn">Track Delivery</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= LIVE DELIVERY ORDER TRACKING MODAL ================= -->
+  <div id="trackingModal" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm hidden flex items-center justify-center p-4">
+    <div class="bg-white dark:bg-slate-900 w-full max-w-lg rounded-3xl border border-slate-200 dark:border-slate-800 p-6 relative overflow-hidden shadow-2xl">
+      <div class="flex items-center justify-between border-b border-slate-100 dark:border-slate-800 pb-4">
+        <div class="flex items-center gap-2.5">
+          <div class="w-9 h-9 rounded-xl bg-emerald-100 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-300 flex items-center justify-center">
+            <i data-lucide="navigation" class="w-5 h-5 animate-spin"></i>
+          </div>
+          <div>
+            <h3 class="text-base font-bold text-slate-900 dark:text-white" data-i18n="liveTrackingTitle">Live Delivery Tracking</h3>
+            <p class="text-xs text-emerald-600 dark:text-emerald-400 font-bold" id="trackingOrderNumber">Order #NS-9284</p>
+          </div>
+        </div>
+        <button onclick="closeTrackingModal()" class="text-slate-400 hover:text-slate-700 dark:hover:text-white p-1 rounded-lg">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+
+      <div class="my-6 space-y-6">
+        <!-- Live Countdown & Map Visual Simulation -->
+        <div class="bg-slate-50 dark:bg-slate-800 p-4 rounded-2xl border border-slate-200 dark:border-slate-700 text-center relative overflow-hidden">
+          <p class="text-xs text-slate-500 dark:text-slate-400 font-medium" data-i18n="estArrival">Estimated Veettil Ethum Time</p>
+          <div class="text-3xl font-black text-emerald-600 dark:text-emerald-400 font-display mt-0.5 tracking-tight" id="trackingTimerDisplay">
+            18 Mins 45 Secs
+          </div>
+          <p class="text-xs text-slate-600 dark:text-slate-300 mt-1 flex items-center justify-center gap-1">
+            <i data-lucide="map-pin" class="w-3.5 h-3.5 text-emerald-600"></i>
+            Destination: <strong class="text-slate-900 dark:text-white" id="trackingDestName">Malappuram Town</strong>
+          </p>
+
+          <!-- Animated Road Path -->
+          <div class="relative w-full h-2.5 bg-slate-200 dark:bg-slate-700 rounded-full mt-4 overflow-hidden">
+            <div id="trackingProgressFill" class="h-full bg-gradient-to-r from-emerald-500 via-teal-500 to-emerald-600 w-2/5 transition-all duration-700"></div>
+          </div>
+        </div>
+
+        <!-- 4 Step Stages Timeline -->
+        <div class="space-y-3.5" id="timelineStepsContainer">
+          <div class="flex items-start gap-3" id="step-1">
+            <div class="w-6 h-6 rounded-full bg-emerald-600 text-white font-black text-xs flex items-center justify-center shrink-0 mt-0.5">✓</div>
+            <div>
+              <p class="text-xs font-bold text-slate-900 dark:text-white" data-i18n="step1Title">Order Confirmed</p>
+              <p class="text-[11px] text-slate-500 dark:text-slate-400" data-i18n="step1Desc">Supermarket computer-il order ethi. Bill print aayi!</p>
+            </div>
+          </div>
+
+          <div class="flex items-start gap-3" id="step-2">
+            <div class="w-6 h-6 rounded-full bg-emerald-100 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-300 border border-emerald-400 font-black text-xs flex items-center justify-center shrink-0 mt-0.5" id="step-2-indicator">2</div>
+            <div>
+              <p class="text-xs font-bold text-slate-900 dark:text-white" id="step-2-title" data-i18n="step2Title">Store-il Packing Nadakkunnu</p>
+              <p class="text-[11px] text-slate-500 dark:text-slate-400" data-i18n="step2Desc">Fresh pacha curry & irachi hygienic cover-il pack cheyyunnu.</p>
+            </div>
+          </div>
+
+          <div class="flex items-start gap-3 opacity-60" id="step-3">
+            <div class="w-6 h-6 rounded-full bg-slate-200 dark:bg-slate-700 text-slate-600 dark:text-slate-300 font-bold text-xs flex items-center justify-center shrink-0 mt-0.5" id="step-3-indicator">3</div>
+            <div>
+              <p class="text-xs font-bold text-slate-900 dark:text-white" id="step-3-title" data-i18n="step3Title">Delivery Boy Shaji On The Way 🛵</p>
+              <p class="text-[11px] text-slate-500 dark:text-slate-400" data-i18n="step3Desc">Nammude delivery boy electric scooter-il purapettu!</p>
+            </div>
+          </div>
+
+          <div class="flex items-start gap-3 opacity-40" id="step-4">
+            <div class="w-6 h-6 rounded-full bg-slate-200 dark:bg-slate-700 text-slate-600 dark:text-slate-300 font-bold text-xs flex items-center justify-center shrink-0 mt-0.5" id="step-4-indicator">4</div>
+            <div>
+              <p class="text-xs font-bold text-slate-900 dark:text-white" id="step-4-title" data-i18n="step4Title">Sadhanam Veettil Ethi! 🎉</p>
+              <p class="text-[11px] text-slate-500 dark:text-slate-400" data-i18n="step4Desc">Doorbell adikkumbol check cheythu collect cheyyuka.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Delivery Partner Contact Card -->
+        <div class="bg-emerald-50 dark:bg-slate-800 border border-emerald-200 dark:border-slate-700 rounded-2xl p-3.5 flex items-center justify-between">
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-full bg-emerald-200 dark:bg-emerald-950 flex items-center justify-center text-xl">🛵</div>
+            <div>
+              <p class="text-xs font-bold text-slate-900 dark:text-white" data-i18n="riderName">Shaji / ഷാജി (Delivery Partner)</p>
+              <p class="text-[10px] text-emerald-800 dark:text-emerald-400 font-medium">KL-10 Electric Scooter • 4.9 ★ Rating</p>
+            </div>
+          </div>
+          <button onclick="callDeliveryPartner()" class="px-3.5 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs flex items-center gap-1 active:scale-95 transition shadow-sm">
+            <i data-lucide="phone" class="w-3.5 h-3.5"></i> <span data-i18n="callRiderBtn">Call Cheyyu</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="flex gap-2.5">
+        <button onclick="simulateFastForwardTracking()" class="flex-1 py-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-xs font-bold text-slate-700 dark:text-slate-200 transition">
+          <span data-i18n="ffStage">Fast-Forward Stage ⏩</span>
+        </button>
+        <button onclick="closeTrackingModal()" class="flex-1 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs transition shadow-sm">
+          <span data-i18n="gotItBtn">Seri, Manassilayi</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= SECURE STAFF / ADMIN LOGIN MODAL ================= -->
+  <!-- Note: No password hints or display anywhere on screen as requested -->
+  <div id="staffLoginModal" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm hidden flex items-center justify-center p-4">
+    <div class="bg-white dark:bg-slate-900 w-full max-w-sm rounded-3xl border border-slate-200 dark:border-slate-800 p-6 relative shadow-2xl">
+      <div class="flex items-center justify-between border-b border-slate-100 dark:border-slate-800 pb-3">
+        <div class="flex items-center gap-2">
+          <div class="w-8 h-8 rounded-xl bg-emerald-100 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-300 flex items-center justify-center">
+            <i data-lucide="lock" class="w-4 h-4"></i>
+          </div>
+          <h3 class="text-base font-bold text-slate-900 dark:text-white" data-i18n="staffModalTitle">Staff / Manager Login</h3>
+        </div>
+        <button onclick="closeStaffModal()" class="text-slate-400 hover:text-slate-700 dark:hover:text-white p-1">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+
+      <div class="py-4 space-y-4">
+        <p class="text-xs text-slate-600 dark:text-slate-400" data-i18n="staffDesc">
+          Store inventory manage cheyyanum, puthiya items add cheyyanum password enter cheyyu.
+        </p>
+
+        <div>
+          <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1" data-i18n="staffPassLabel">
+            Staff Security Password:
+          </label>
+          <div class="relative">
+            <input 
+              type="password" 
+              id="staffPasswordInput" 
+              placeholder="••••••••••••••••" 
+              class="w-full glass-input rounded-xl px-3.5 py-2.5 text-xs pr-10"
+              onkeydown="if(event.key === 'Enter') handleStaffLogin()"
+              autocomplete="current-password"
+            />
+            <button type="button" onclick="togglePasswordVisibility()" class="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-700 dark:hover:text-slate-200">
+              <i data-lucide="eye" id="pwdEyeIcon" class="w-4 h-4"></i>
+            </button>
+          </div>
+        </div>
+
+        <div id="loginErrorMsg" class="hidden text-xs text-red-600 bg-red-50 dark:bg-red-950/40 border border-red-200 dark:border-red-900 px-3 py-2 rounded-xl">
+          <span data-i18n="staffWrongPass">Thettaya Password! Please try again.</span>
+        </div>
+
+        <button onclick="handleStaffLogin()" class="w-full py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold text-xs transition flex items-center justify-center gap-2 shadow-md">
+          <i data-lucide="log-in" class="w-4 h-4"></i> <span data-i18n="loginBtn">Login Cheyyu</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= STAFF / ADMIN DASHBOARD FULL MODAL ================= -->
+  <div id="staffDashboardModal" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-md hidden flex items-center justify-center p-3 sm:p-6 overflow-y-auto">
+    <div class="bg-white dark:bg-slate-900 w-full max-w-5xl rounded-3xl border border-slate-200 dark:border-slate-800 p-5 sm:p-7 relative shadow-2xl my-auto">
+      
+      <!-- Admin Top Nav -->
+      <div class="flex flex-wrap items-center justify-between border-b border-slate-100 dark:border-slate-800 pb-4 gap-3">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-2xl bg-emerald-600 text-white font-black flex items-center justify-center shadow-md">
+            <i data-lucide="settings" class="w-5 h-5"></i>
+          </div>
+          <div>
+            <h2 class="text-lg font-black text-slate-900 dark:text-white font-display">Staff / Manager Dashboard</h2>
+            <p class="text-xs text-emerald-700 dark:text-emerald-400 font-bold">Stock & Price Control Center (Synced with LocalStorage)</p>
+          </div>
+        </div>
+
+        <div class="flex items-center gap-2">
+          <button onclick="openAddNewItemForm()" class="px-3.5 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs flex items-center gap-1.5 transition shadow-sm">
+            <i data-lucide="plus-circle" class="w-4 h-4"></i> Add New Product
+          </button>
+          <button onclick="resetToDefaultCatalog()" class="px-3 py-2 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 text-xs font-semibold">
+            Reset Default
+          </button>
+          <button onclick="closeStaffDashboard()" class="p-2 rounded-xl text-slate-400 hover:text-slate-700 dark:hover:text-white bg-slate-100 dark:bg-slate-800">
+            <i data-lucide="x" class="w-5 h-5"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- Add/Edit Item Form Drawer -->
+      <div id="adminItemFormContainer" class="hidden my-4 p-4 rounded-2xl bg-emerald-50/70 dark:bg-slate-800/80 border border-emerald-200 dark:border-slate-700">
+        <h4 class="text-sm font-bold text-slate-900 dark:text-white mb-3" id="adminFormHeading">Puthiya Product Cherkkuka</h4>
+        <form id="adminProductForm" onsubmit="saveProduct(event)" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 text-xs">
+          <input type="hidden" id="editProductId" value="" />
+          <div>
+            <label class="block text-slate-700 dark:text-slate-300 font-semibold mb-1">Item Name (Manglish):</label>
+            <input type="text" id="formItemName" required placeholder="Eg: Fresh Nadan Chemmeen" class="w-full glass-input rounded-xl px-3 py-2" />
+          </div>
+
+          <div>
+            <label class="block text-slate-700 dark:text-slate-300 font-semibold mb-1">Malayalam Name (മലയാളം പേര്):</label>
+            <input type="text" id="formItemNameMl" required placeholder="Eg: ചെമ്മീൻ ഫ്രഷ്" class="w-full glass-input rounded-xl px-3 py-2" />
+          </div>
+
+          <div>
+            <label class="block text-slate-700 dark:text-slate-300 font-semibold mb-1">Price in ₹ (Rate):</label>
+            <input type="number" id="formItemPrice" required min="1" step="0.5" placeholder="Eg: 240" class="w-full glass-input rounded-xl px-3 py-2" />
+          </div>
+
+          <div>
+            <label class="block text-slate-700 dark:text-slate-300 font-semibold mb-1">Unit / Quantity Type:</label>
+            <input type="text" id="formItemUnit" required placeholder="Eg: 1 Kg or 500g or 1 Packet" class="w-full glass-input rounded-xl px-3 py-2" />
+          </div>
+
+          <div>
+            <label class="block text-slate-700 dark:text-slate-300 font-semibold mb-1">Category:</label>
+            <select id="formItemCategory" class="w-full glass-input rounded-xl px-3 py-2">
+              <option value="Vegetables">Pacha Curry (Vegetables)</option>
+              <option value="Non-Veg">Nadan Non-Veg (Meat & Fish)</option>
+              <option value="Fruits">Pazhangal (Fruits)</option>
+              <option value="Groceries">Groceries & Spices</option>
+            </select>
+          </div>
+
+          <div>
+            <label class="block text-slate-700 dark:text-slate-300 font-semibold mb-1">Veg or Non-Veg Badge:</label>
+            <select id="formItemType" class="w-full glass-input rounded-xl px-3 py-2">
+              <option value="veg">Veg (Green Badge)</option>
+              <option value="non-veg">Non-Veg (Red Badge)</option>
+            </select>
+          </div>
+
+          <div class="sm:col-span-2 lg:col-span-3">
+            <label class="block text-slate-700 dark:text-slate-300 font-semibold mb-1">Realistic Image URL (Unsplash):</label>
+            <input type="url" id="formItemImage" placeholder="https://images.unsplash.com/..." class="w-full glass-input rounded-xl px-3 py-2" />
+          </div>
+
+          <div class="sm:col-span-2 lg:col-span-3 flex justify-end gap-2 pt-2">
+            <button type="button" onclick="closeAdminForm()" class="px-4 py-2 rounded-xl bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-200 hover:bg-slate-300 font-bold">
+              Cancel
+            </button>
+            <button type="submit" class="px-5 py-2 rounded-xl bg-emerald-600 text-white font-extrabold hover:bg-emerald-700 shadow-sm">
+              Save Item
+            </button>
+          </div>
+        </form>
+      </div>
+
+      <!-- Inventory Table -->
+      <div class="mt-4 overflow-x-auto max-h-[55vh] border border-slate-200 dark:border-slate-800 rounded-2xl">
+        <table class="w-full text-left text-xs text-slate-700 dark:text-slate-300">
+          <thead class="bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 uppercase text-[10px] tracking-wider sticky top-0">
+            <tr>
+              <th class="p-3">Photo & Item</th>
+              <th class="p-3">Category</th>
+              <th class="p-3">Type</th>
+              <th class="p-3">Rate (₹)</th>
+              <th class="p-3">Stock Status</th>
+              <th class="p-3 text-right">Actions</th>
+            </tr>
+          </thead>
+          <tbody id="adminInventoryTableBody" class="divide-y divide-slate-100 dark:divide-slate-800">
+            <!-- Populated via JavaScript -->
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ================= TOAST NOTIFICATION CONTAINER ================= -->
+  <div id="toastNotification" class="fixed bottom-6 right-6 z-50 transform translate-y-24 opacity-0 transition-all duration-300 pointer-events-none">
+    <div class="bg-slate-900 text-white dark:bg-white dark:text-slate-900 px-4 py-3 rounded-2xl shadow-xl text-xs sm:text-sm font-semibold flex items-center gap-3">
+      <div class="w-7 h-7 rounded-full bg-emerald-500 text-slate-950 flex items-center justify-center shrink-0">
+        <i data-lucide="check" class="w-4 h-4"></i>
+      </div>
+      <span id="toastMessage">Item added to cart!</span>
+    </div>
+  </div>
+
+  <!-- ================= JAVASCRIPT APPLICATION LOGIC ================= -->
+  <script>
+    // --- Secure Staff Password (DO NOT PRINT OR HINT IN UI) ---
+    const SECURE_ADMIN_HASH_KEY = "K3r@lA#98X$uP3r!2026";
+
+    // --- Translations Dictionary (Manglish <-> Malayalam) ---
+    const I18N = {
+      manglish: {
+        tickerBadge: "OFFER",
+        tickerText: "Super Offer! Orders ₹499-nu mukalil aayal <strong>Free Nadan Fast Delivery</strong>!",
+        brandTitle: "Nammude Supermarket",
+        badgeFresh: "100% Nadan & Fresh",
+        tagline: "Aadambaram Illa, Nalla Fresh Sadhanangal Veettil Ethum!",
+        deliverySpotLabel: "Delivery Spot:",
+        staffBtn: "Staff / Admin Login",
+        cartTitle: "Nammude Cart",
+        spotShort: "Spot:",
+        heroPill: "100% Nadan Quality & Pettannu Delivery",
+        heroHeading: 'Ivide Ellaam Undu! <br class="hidden sm:inline" /><span class="bg-gradient-to-r from-emerald-600 to-teal-600 bg-clip-text text-transparent">Fresh Thakkali, Pacha Curry, Meen & Nadan Irachi</span>',
+        heroSubheading: "Market-il poyi velichavatta nillanda! Nammude app vazhi ippo thanne order cheyyu. Fresh farm veggies, hydroponic items, ready-to-cook chicken tikka & cut meats 30 minutes-il veettilethikkam!",
+        badgeEtaTitle: "Fastest Delivery",
+        badgeOfferTitle: "Offer Alert",
+        badgeOfferDesc: "Min ₹499 = Zero Delivery Charge",
+        badgeFssaiTitle: "FSSAI Certified",
+        badgeFssaiDesc: "100% Hygienic & Clean Meat",
+        freshBadge: "Fresh Stock",
+        heroBannerTitle: "Kattal Fresh Nadan Stock!",
+        heroBannerSubtitle: "Daily morning farm-picked fresh items arrived!",
+        heroShopBtn: "Items Nokki Vaangam",
+        searchPlaceholder: "Sadhanam thirayoo (Eg: Thakkali, Kozhi, Beef, Fish, Lettuce)...",
+        dietAll: "Ellaam (All Items)",
+        dietVeg: "Only Veg",
+        dietNonVeg: "Only Non-Veg",
+        sortLabel: "Sort Cheyyu:",
+        sortFeatured: "Featured First",
+        sortLow: "Price: Kuranja Rate First",
+        sortHigh: "Price: Kooduthal Rate First",
+        sortName: "Name (A-Z)",
+        emptyTitle: "Ayyoda! Sadhanam Onnum Kandeella",
+        emptyDesc: "Ningal search cheytha item stock-il illa or spelling thettanu. Vere ethilum search cheythu nokkoo!",
+        emptyReset: "Reset Filter & Search",
+        deliverToLabel: "Deliver to:",
+        selectPaymentMode: "Payment Mode (പണം നൽകുന്ന രീതി):",
+        payCod: "Cash on Delivery (COD)",
+        payNowOnline: "Pay Now (UPI / Card)",
+        billSubtotal: "Items Subtotal:",
+        billDelivery: "Delivery Charge:",
+        aboveFreeNotice: "(₹499+ free)",
+        billPackaging: "Eco Packing & Cover:",
+        billGst: "Taxes (GST 5% included):",
+        billGrandTotal: "Aake Kodukkendathu (Grand Total):",
+        clearCartBtn: "Clear Cart",
+        checkoutBtnText: "Order Place Cheyyu",
+        billTitle: "Digital Bill / Cash Receipt",
+        receiptFooterQuote: '"Nanni, Veendum Varika! Nammude Nadan Fresh Supermarket!"',
+        copyBillBtn: "Copy Bill",
+        trackDeliveryBtn: "Track Delivery",
+        liveTrackingTitle: "Live Delivery Tracking",
+        estArrival: "Estimated Veettil Ethum Time",
+        step1Title: "Order Confirmed",
+        step1Desc: "Supermarket computer-il order ethi. Bill print aayi!",
+        step2Title: "Store-il Packing Nadakkunnu",
+        step2Desc: "Fresh pacha curry & irachi hygienic cover-il pack cheyyunnu.",
+        step3Title: "Delivery Boy Shaji On The Way 🛵",
+        step3Desc: "Nammude delivery boy electric scooter-il purapettu!",
+        step4Title: "Sadhanam Veettil Ethi! 🎉",
+        step4Desc: "Doorbell adikkumbol check cheythu collect cheyyuka.",
+        riderName: "Shaji (Delivery Partner)",
+        callRiderBtn: "Call Cheyyu",
+        ffStage: "Fast-Forward Stage ⏩",
+        gotItBtn: "Seri, Manassilayi",
+        staffModalTitle: "Staff / Manager Login",
+        staffDesc: "Store inventory manage cheyyanum, puthiya items add cheyyanum password enter cheyyu.",
+        staffPassLabel: "Staff Security Password:",
+        staffWrongPass: "Thettaya Password! Please try again.",
+        loginBtn: "Login Cheyyu",
+        cartEmptyTitle: "Cart Kaliyaanallo!",
+        cartEmptyDesc: "Nammude fresh pacha curry or nadan irachi cart-il add cheyyo."
+      },
+      malayalam: {
+        tickerBadge: "ഓഫർ",
+        tickerText: "സൂപ്പർ ഓഫർ! ₹499-ന് മുകളിൽ ഓർഡർ ചെയ്താൽ <strong>ഫ്രീ ഡെലിവറി</strong>!",
+        brandTitle: "നമ്മുടെ സൂപ്പർമാർക്കറ്റ്",
+        badgeFresh: "100% നാടൻ & ഫ്രഷ്",
+        tagline: "ആഡംബരമില്ല, നല്ല ഫ്രഷ് സാധനങ്ങൾ വീട്ടിലെത്തും!",
+        deliverySpotLabel: "ഡെലിവറി സ്ഥലം:",
+        staffBtn: "സ്റ്റാഫ് ലോഗിൻ",
+        cartTitle: "ഷോപ്പിംഗ് കാർട്ട്",
+        spotShort: "സ്ഥലം:",
+        heroPill: "100% നാടൻ ഗുണമേന്മയും വേഗത്തിലുള്ള ഡെലിവറിയും",
+        heroHeading: 'ഇവിടെയെല്ലാം ഉണ്ട്! <br class="hidden sm:inline" /><span class="bg-gradient-to-r from-emerald-600 to-teal-600 bg-clip-text text-transparent">ഫ്രഷ് തക്കാളി, പച്ചക്കറി, മീൻ & നാടൻ ഇറച്ചി</span>',
+        heroSubheading: "മാർക്കറ്റിൽ പോയി വെയിൽ കൊള്ളേണ്ട! നമ്മുടെ ആപ്പ് വഴി ഇപ്പോൾ തന്നെ ഓർഡർ ചെയ്യൂ. കൃഷിയിടത്തിൽ നിന്നുള്ള പച്ചക്കറികളും ഫ്രഷ് ഇറച്ചിയും 30 മിനിറ്റിൽ വീട്ടിലെത്തും!",
+        badgeEtaTitle: "അതിവേഗ ഡെലിവറി",
+        badgeOfferTitle: "ഓഫർ അലർട്ട്",
+        badgeOfferDesc: "₹499 മുകളിൽ സൗജന്യ ഡെലിവറി",
+        badgeFssaiTitle: "FSSAI സർട്ടിഫൈഡ്",
+        badgeFssaiDesc: "100% വൃത്തിയുള്ള ഇറച്ചിയും ഭക്ഷണവും",
+        freshBadge: "ഫ്രഷ് സ്റ്റോക്ക്",
+        heroBannerTitle: "കട്ടൻ ഫ്രഷ് നാടൻ സ്റ്റോക്ക്!",
+        heroBannerSubtitle: "ഇന്ന് രാവിലെ കൃഷിയിടത്തിൽ നിന്നും എത്തിച്ചവ!",
+        heroShopBtn: "സാധനങ്ങൾ തിരഞ്ഞെടുക്കുക",
+        searchPlaceholder: "സാധനങ്ങൾ തിരയുക (ഉദാ: തക്കാളി, കോഴി, പോത്തിറച്ചി, മീൻ)...",
+        dietAll: "എല്ലാം (All Items)",
+        dietVeg: "വെജിറ്റേറിയൻ മാത്രം",
+        dietNonVeg: "നോൺ-വെജ് മാത്രം",
+        sortLabel: "ക്രമീകരിക്കുക:",
+        sortFeatured: "പ്രത്യേകമായവ ആദ്യം",
+        sortLow: "വില: കുറഞ്ഞത് ആദ്യം",
+        sortHigh: "വില: കൂടിയത് ആദ്യം",
+        sortName: "പേര് (A-Z)",
+        emptyTitle: "അയ്യോ! തിരഞ്ഞ സാധനം കണ്ടെത്താനായില്ല",
+        emptyDesc: "നിങ്ങൾ തിരഞ്ഞ സാധനം സ്റ്റോക്കിലില്ല അല്ലെങ്കിൽ അക്ഷരത്തെറ്റുണ്ട്. മറ്റൊന്ന് തിരഞ്ഞു നോക്കൂ!",
+        emptyReset: "ഫിൽട്ടർ മാറ്റുക",
+        deliverToLabel: "എത്തിക്കേണ്ട സ്ഥലം:",
+        selectPaymentMode: "പണം നൽകുന്ന രീതി (Payment Method):",
+        payCod: "നേരിട്ട് പണം നൽകുക (COD)",
+        payNowOnline: "ഓൺലൈൻ വഴി നൽകുക (UPI / Card)",
+        billSubtotal: "ആകെ സാധനങ്ങളുടെ വില:",
+        billDelivery: "ഡെലിവറി ചാർജ്:",
+        aboveFreeNotice: "(₹499+ സൗജന്യം)",
+        billPackaging: "ഇക്കോ പാക്കിംഗ് ചാർജ്:",
+        billGst: "നികുതി (GST 5% ഉൾപ്പെടെ):",
+        billGrandTotal: "ആകെ നൽകേണ്ട തുക (Grand Total):",
+        clearCartBtn: "കാർട്ട് കാലിയാക്കുക",
+        checkoutBtnText: "ഓർഡർ സ്ഥിരീകരിക്കുക",
+        billTitle: "ഡിജിറ്റൽ ബിൽ / ക്യാഷ് രസീത്",
+        receiptFooterQuote: '"നന്ദി, വീണ്ടും സന്ദർശിക്കുക! നമ്മുടെ നാടൻ സൂപ്പർമാർക്കറ്റ്!"',
+        copyBillBtn: "ബിൽ കോപ്പി ചെയ്യുക",
+        trackDeliveryBtn: "ഡെലിവറി ട്രാക്ക് ചെയ്യുക",
+        liveTrackingTitle: "ലൈവ് ഡെലിവറി ട്രാക്കിംഗ്",
+        estArrival: "വീട്ടിലെത്തുന്ന ഏകദേശ സമയം",
+        step1Title: "ഓർഡർ സ്ഥിരീകരിച്ചു",
+        step1Desc: "സൂപ്പർമാർക്കറ്റിൽ ഓർഡർ സ്വീകരിച്ചു. ബിൽ തയ്യാറായി!",
+        step2Title: "പാക്കിംഗ് പുരോഗമിക്കുന്നു",
+        step2Desc: "ശുചിത്വമുള്ള കവറുകളിൽ സാധനങ്ങൾ പാക്ക് ചെയ്യുന്നു.",
+        step3Title: "ഡെലിവറി റൈഡർ ഷാജി പുറപ്പെട്ടു 🛵",
+        step3Desc: "ഇലക്ട്രിക് സ്കൂട്ടറിൽ ഓർഡറുമായി റൈഡർ വരുന്നു!",
+        step4Title: "സാധനങ്ങൾ വീട്ടിലെത്തി! 🎉",
+        step4Desc: "ഡോർബെൽ അടിക്കുമ്പോൾ വാങ്ങി പരിശോധിക്കുക.",
+        riderName: "ഷാജി (ഡെലിവറി പാർട്ണർ)",
+        callRiderBtn: "വിളിക്കുക",
+        ffStage: "അടുത്ത ഘട്ടം ⏩",
+        gotItBtn: "ശരി, മനസ്സിലായി",
+        staffModalTitle: "സ്റ്റാഫ് / മാനേജർ ലോഗിൻ",
+        staffDesc: "ഇൻവെന്ററിയും വിലയും നിയന്ത്രിക്കാൻ പാസ്‌വേഡ് രേഖപ്പെടുത്തുക.",
+        staffPassLabel: "സ്റ്റാഫ് സെക്യൂരിറ്റി പാസ്‌വേഡ്:",
+        staffWrongPass: "തെറ്റായ പാസ്‌വേഡ്! വീണ്ടും ശ്രമിക്കുക.",
+        loginBtn: "ലോഗിൻ ചെയ്യുക",
+        cartEmptyTitle: "കാർട്ട് ശൂന്യമാണ്!",
+        cartEmptyDesc: "ഫ്രഷ് പച്ചക്കറികളോ നാടൻ ഇറച്ചിയോ കാർട്ടിലേക്ക് ചേർക്കൂ."
+      }
+    };
+
+    // --- Product Catalog with Unsplash Photography ---
+    const DEFAULT_PRODUCTS = [
+      {
+        id: "prod-1",
+        name: "Thakkali (Fresh Farm Tomato)",
+        nameMl: "നാടൻ തക്കാളി (Tomato)",
+        category: "Vegetables",
+        categoryMl: "പച്ചക്കറികൾ",
+        type: "veg",
+        price: 34,
+        unit: "1 Kg",
+        image: "https://images.unsplash.com/photo-1592924357228-91a4daadcfea?auto=format&fit=crop&w=600&q=80",
+        inStock: true,
+        tag: "Daily Fresh",
+        desc: "Naattil ninnu potticha fresh chuvanna thakkali.",
+        descMl: "കൃഷിയിടത്തിൽ നിന്നും നേരിട്ടെത്തിച്ച ഫ്രഷ് നാടൻ തക്കാളി."
+      },
+      {
+        id: "prod-2",
+        name: "Savala (Fresh Red Onion)",
+        nameMl: "സവാള (Red Onion)",
+        category: "Vegetables",
+        categoryMl: "പച്ചക്കറികൾ",
+        type: "veg",
+        price: 42,
+        unit: "1 Kg",
+        image: "https://images.unsplash.com/photo-1618512496248-a07fe83aa8cb?auto=format&fit=crop&w=600&q=80",
+        inStock: true,
+        tag: "Kitchen Must",
+        desc: "Kadiyum sambarum vekkan nalla thadutha fresh savala.",
+        descMl: "കറികൾക്കും സാമ്പാറിനും അനുയോജ്യമായ നല്ല ഉള്ളി."
+      },
+      {
+        id: "prod-3",
+        name: "Hydroponic Butterhead Lettuce",
+        nameMl: "ഹൈഡ്രോപോണിക് ലെറ്റ്യൂസ് (Lettuce)",
+        category: "Vegetables",
+        categoryMl: "പച്ചക്കറികൾ",
+        type: "veg",
+        price: 65,
+        unit: "1 Bunch",
+        image: "https://images.unsplash.com/photo-1622206151226-18ca2c9ab4a1?auto=format&fit=crop&w=600&q=80",
+        inStock: true,
+        tag: "Pesticide Free",
+        desc: "Hydroponic farm-il valarnna crisp green salad leaves.",
+        descMl: "കീടനാശിനിയില്ലാത്ത ക്രിസ്പ് സാലഡ് ഇലകൾ."
+      },
+      {
+        id: "prod-4",
+        name: "Fresh Green Broccoli",
+        nameMl: "ഗ്രീൻ ബ്രോക്കോളി (Broccoli)",
+        category: "Vegetables",
+        categoryMl: "പച്ചക്കറികൾ",
+        type: "veg",
+        price: 78,
+        unit: "500g",
+        image: "https://images.unsplash.com/photo-1459411621453-7b03977f4bfc?auto=format&fit=crop&w=600&q=80",
+        inStock: true,
+        tag: "Healthy",
+        desc: "Superfood packed with natural vitamins and nutrition.",
+        descMl: "വിറ്റാമിനുകളാൽ സമ്പുഷ്ടമായ പച്ച ബ്രോക്കോളി."
+      },
+      {
+        id: "prod-5",
+        name: "Nadan Kozhi (Fresh Cut Raw Chicken)",
+        nameMl: "നാടൻ കോഴിയിറച്ചി (Chicken Cut)",
+        category: "Non-Veg",
+        categoryMl: "ഇറച്ചി & മീൻ",
+        type: "non-veg",
+        price: 180,
+        unit: "1 Kg",
+        image: "https://images.unsplash.com/photo-1604503468506-a8da13d82791?auto=format&fit=crop&w=600&q=80",
+        inStock: true,
+        tag: "Bestseller",
+        desc: "100% Halal & Clean cut fresh nadan curry chicken.",
+        descMl: "വൃത്തിയോടെ മുറിച്ച ഫ്രഷ് നാടൻ ചിക്കൻ."
+      },
+      {
+        id: "prod-6",
+        name: "Beef Boneless (Prime Clean Beef)",
+        nameMl: "പോത്തിറച്ചി ബോൺലെസ്സ് (Beef Boneless)",
+        category: "Non-Veg",
+        categoryMl: "ഇറച്ചി & മീൻ",
+        type: "non-veg",
+        price: 380,
+        unit: "1 Kg",
+        image: "https://images.unsplash.com/photo-1588168333986-5078d3ae3976?auto=format&fit=crop&w=600&q=80",
+        inStock: true,
+        tag: "Hot Favorite",
+        desc: "Beef fry, roast cheyyan kozhappam illatha tender boneless meat.",
+        descMl: "റോസ്റ്റിനും ഫ്രൈക്കും അനുയോജ്യമായ എല്ലില്ലാത്ത പോത്തിറച്ചി."
+      },
+      {
+        id: "prod-7",
+        name: "Marinated Chicken Tikka (Ready-to-Cook)",
+        nameMl: "ചിക്കൻ ടിക്ക മിക്സ് (Chicken Tikka)",
+        category: "Non-Veg",
+        categoryMl: "ഇറച്ചി & മീൻ",
+        type: "non-veg",
+        price: 220,
+        unit: "400g Box",
+        image: "https://images.unsplash.com/photo-1599488615731-7e5c2823ff28?auto=format&fit=crop&w=600&q=80",
+        inStock: true,
+        tag: "Ready-to-Fry",
+        desc: "Spicy Kerala-style marinated chicken tikka cubes for quick fry.",
+        descMl: "മസാല പുരട്ടി വെച്ച രുചികരമായ ചിക്കൻ ടിക്ക."
+      },
+      {
+        id: "prod-8",
+        name: "Nadan Aattirachi Mix (Mutton Cutlet Mix)",
+        nameMl: "മട്ടൺ കട്‌ലറ്റ് മിക്സ് (Mutton Mix)",
+        category: "Non-Veg",
+        categoryMl: "ഇറച്ചി & മീൻ",
+        type: "non-veg",
+        price: 290,
+        unit: "500g Pack",
+        image: "https://images.unsplash.com/photo-1529692236671-f1f6cf9683ba?auto=format&fit=crop&w=600&q=80",
+        inStock: true,
+        tag: "Chef Special",
+        desc: "Minced prime mutton seasoned with Travancore spices for cutlets.",
+        descMl: "കട്‌ലറ്റിനായി മസാല ചേർത്ത നല്ല ആട്ടിറച്ചി."
+      },
+      {
+        id: "prod-9",
+        name: "Fresh Ayala & Chaala (Mackerel Fish)",
+        nameMl: "ഫ്രഷ് അയല & മത്തി (Fish Ayala)",
+        category: "Non-Veg",
+        categoryMl: "ഇറച്ചി & മീൻ",
+        type: "non-veg",
+        price: 210,
+        unit: "1 Kg Cleaned",
+        image: "https://images.unsplash.com/photo-1534483509719-3feaee7c30da?auto=format&fit=crop&w=600&q=80",
+        inStock: true,
+        tag: "Harbor Catch",
+        desc: "Kadalil ninnu neere vanna fresh chaala/ayala fish, cleaned & prepped.",
+        descMl: "ഹാർബറിൽ നിന്നും നേരിട്ടെത്തിച്ച് വൃത്തിയാക്കിയ കടൽ മീൻ."
+      },
+      {
+        id: "prod-10",
+        name: "Nendran Pazham (Golden Kerala Banana)",
+        nameMl: "നേന്ത്രപ്പഴം (Kerala Banana)",
+        category: "Fruits",
+        categoryMl: "പഴവർഗ്ഗങ്ങൾ",
+        type: "veg",
+        price: 52,
+        unit: "1 Kg",
+        image: "https://images.unsplash.com/photo-1571771894821-ce9b6c11b08e?auto=format&fit=crop&w=600&q=80",
+        inStock: true,
+        tag: "Sweet Nadan",
+        desc: "Pazham pori undakkanum puzhungi kazhikkanum nalla sweet pazham.",
+        descMl: "പഴംപൊരിക്കും പുഴുങ്ങാനും പറ്റിയ മധുരമുള്ള നേന്ത്രപ്പഴം."
+      },
+      {
+        id: "prod-11",
+        name: "Nadan Palpaal (Fresh Farm Dairy Milk)",
+        nameMl: "നാടൻ പശുവിൻ പാൽ (Farm Milk)",
+        category: "Groceries",
+        categoryMl: "പലചരക്ക്",
+        type: "veg",
+        price: 58,
+        unit: "1 Litre Bottle",
+        image: "https://images.unsplash.com/photo-1550583724-b2692b85b150?auto=format&fit=crop&w=600&q=80",
+        inStock: true,
+        tag: "Farm Pure",
+        desc: "Fresh pure dairy farm milk for delicious tea, coffee & desserts.",
+        descMl: "ഫാമിൽ നിന്നുള്ള മായം ചേർക്കാത്ത ശുദ്ധമായ പാൽ."
+      },
+      {
+        id: "prod-12",
+        name: "Kerala Nadan Matta Rice (Traditional)",
+        nameMl: "നാടൻ മട്ടയരി (Matta Rice)",
+        category: "Groceries",
+        categoryMl: "പലചരക്ക്",
+        type: "veg",
+        price: 110,
+        unit: "2 Kg Pack",
+        image: "https://images.unsplash.com/photo-1586201375761-83865001e31c?auto=format&fit=crop&w=600&q=80",
+        inStock: true,
+        tag: "Traditional",
+        desc: "Oonu kazhikkan nalla swadulla nadan chuvanna matta ari.",
+        descMl: "ഊണിന് സ്വാദൂറുന്ന നല്ല നാടൻ ചുവന്ന മട്ടയരി."
+      }
+    ];
+
+    const DELIVERY_ZONES = {
+      "Malappuram Town": { eta: "15-20 Mins", charge: 25, freeThreshold: 499 },
+      "Manjeri": { eta: "25-30 Mins", charge: 35, freeThreshold: 499 },
+      "Kavanur": { eta: "30-35 Mins", charge: 40, freeThreshold: 599 },
+      "Kondotty": { eta: "35-40 Mins", charge: 45, freeThreshold: 599 },
+      "Perinthalmanna": { eta: "40-45 Mins", charge: 50, freeThreshold: 699 },
+      "Custom Location": { eta: "30-40 Mins", charge: 35, freeThreshold: 499 }
+    };
+
+    // --- State Variables ---
+    let currentLang = "manglish"; // 'manglish' | 'malayalam'
+    let isDarkMode = false;
+    let products = [];
+    let cart = {};
+    let selectedCategory = "All";
+    let selectedDiet = "all";
+    let searchQuery = "";
+    let sortMode = "featured";
+    let currentLocation = "Malappuram Town";
+    let currentTrackingStage = 1;
+    let trackingTimerSeconds = 1125;
+    let trackingInterval = null;
+
+    // --- Init ---
+    window.addEventListener("DOMContentLoaded", () => {
+      // Load saved preferences
+      const savedLang = localStorage.getItem("ns_lang");
+      if (savedLang) currentLang = savedLang;
+
+      const savedTheme = localStorage.getItem("ns_theme");
+      if (savedTheme === "dark") {
+        setTheme(true);
+      } else {
+        setTheme(false);
+      }
+
+      loadProductsFromStorage();
+      loadCartFromStorage();
+      applyLanguage();
+      renderCategoryChips();
+      renderProducts();
+      updateLocationDisplay();
+      lucide.createIcons();
+    });
+
+    // --- Theme Control (Dark/Light) ---
+    function toggleDarkMode() {
+      setTheme(!isDarkMode);
+    }
+
+    function setTheme(dark) {
+      isDarkMode = dark;
+      const html = document.documentElement;
+      const themeIcon = document.getElementById("themeIcon");
+
+      if (isDarkMode) {
+        html.classList.add("dark");
+        html.classList.remove("light");
+        themeIcon.setAttribute("data-lucide", "sun");
+        localStorage.setItem("ns_theme", "dark");
+      } else {
+        html.classList.remove("dark");
+        html.classList.add("light");
+        themeIcon.setAttribute("data-lucide", "moon");
+        localStorage.setItem("ns_theme", "light");
+      }
+      lucide.createIcons();
+    }
+
+    // --- Language Switcher Control ---
+    function toggleLanguage() {
+      currentLang = currentLang === "manglish" ? "malayalam" : "manglish";
+      localStorage.setItem("ns_lang", currentLang);
+      applyLanguage();
+      renderCategoryChips();
+      renderProducts();
+      updateCartUI();
+      showToast(currentLang === "malayalam" ? "ഭാഷ മലയാളത്തിലേക്ക് മാറ്റി!" : "Language switched to Manglish!");
+    }
+
+    function applyLanguage() {
+      const dict = I18N[currentLang];
+      document.getElementById("currentLangLabel").innerText = currentLang === "manglish" ? "മലയാളം" : "English / Manglish";
+      
+      document.getElementById("mainBrandTitle").innerHTML = currentLang === "manglish" 
+        ? `Nammude <span class="text-emerald-600 dark:text-emerald-400">Supermarket</span>`
+        : `നമ്മുടെ <span class="text-emerald-600 dark:text-emerald-400">സൂപ്പർമാർക്കറ്റ്</span>`;
+
+      document.getElementById("searchInput").placeholder = dict.searchPlaceholder;
+
+      // Update all elements with data-i18n
+      document.querySelectorAll("[data-i18n]").forEach(el => {
+        const key = el.getAttribute("data-i18n");
+        if (dict[key]) {
+          el.innerHTML = dict[key];
+        }
+      });
+    }
+
+    // --- Products Storage ---
+    function loadProductsFromStorage() {
+      const stored = localStorage.getItem("nammude_supermarket_items_v3");
+      if (stored) {
+        try {
+          products = JSON.parse(stored);
+        } catch (e) {
+          products = [...DEFAULT_PRODUCTS];
+        }
+      } else {
+        products = [...DEFAULT_PRODUCTS];
+        saveProductsToStorage();
+      }
+    }
+
+    function saveProductsToStorage() {
+      localStorage.setItem("nammude_supermarket_items_v3", JSON.stringify(products));
+    }
+
+    function resetToDefaultCatalog() {
+      if (confirm("Default high-res catalog reset cheyyano?")) {
+        products = [...DEFAULT_PRODUCTS];
+        saveProductsToStorage();
+        renderProducts();
+        renderAdminInventory();
+        showToast("Catalog reset successfully!");
+      }
+    }
+
+    // --- Cart Storage ---
+    function loadCartFromStorage() {
+      const saved = localStorage.getItem("nammude_supermarket_cart_v3");
+      if (saved) {
+        try {
+          cart = JSON.parse(saved);
+        } catch (e) {
+          cart = {};
+        }
+      }
+      updateCartUI();
+    }
+
+    function saveCartToStorage() {
+      localStorage.setItem("nammude_supermarket_cart_v3", JSON.stringify(cart));
+      updateCartUI();
+    }
+
+    // --- Categories Render ---
+    function getCategoriesList() {
+      return [
+        { id: "All", label: currentLang === 'malayalam' ? "എല്ലാം (All)" : "Ellaam (All)" },
+        { id: "Vegetables", label: currentLang === 'malayalam' ? "പച്ചക്കറികൾ (Veg)" : "Pacha Curry (Veg)" },
+        { id: "Non-Veg", label: currentLang === 'malayalam' ? "ഇറച്ചി & മീൻ (Non-Veg)" : "Nadan Non-Veg (Meat & Fish)" },
+        { id: "Fruits", label: currentLang === 'malayalam' ? "പഴവർഗ്ഗങ്ങൾ (Fruits)" : "Pazhangal (Fruits)" },
+        { id: "Groceries", label: currentLang === 'malayalam' ? "പലചരക്ക് (Groceries)" : "Groceries & Spices" }
+      ];
+    }
+
+    function renderCategoryChips() {
+      const container = document.getElementById("categoryChips");
+      const list = getCategoriesList();
+      container.innerHTML = list.map(cat => {
+        const isActive = selectedCategory === cat.id;
+        return `
+          <button 
+            onclick="setCategory('${cat.id}')"
+            class="px-4 py-2 rounded-2xl text-xs font-black transition flex items-center gap-1.5 whitespace-nowrap ${
+              isActive 
+                ? 'bg-emerald-600 text-white shadow-md shadow-emerald-600/20' 
+                : 'bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-700'
+            }">
+            <span>${cat.label}</span>
+          </button>
+        `;
+      }).join('');
+    }
+
+    function setCategory(catId) {
+      selectedCategory = catId;
+      renderCategoryChips();
+      renderProducts();
+    }
+
+    function setDietFilter(diet) {
+      selectedDiet = diet;
+      document.querySelectorAll(".diet-filter-btn").forEach(btn => {
+        btn.classList.remove("bg-emerald-600", "text-white", "border-emerald-600");
+        btn.classList.add("bg-white", "dark:bg-slate-800", "text-slate-700", "dark:text-slate-200", "border-slate-200", "dark:border-slate-700");
+      });
+
+      const activeBtn = document.getElementById(`diet-${diet}`);
+      if (activeBtn) {
+        activeBtn.classList.add("bg-emerald-600", "text-white", "border-emerald-600");
+        activeBtn.classList.remove("bg-white", "dark:bg-slate-800", "text-slate-700", "dark:text-slate-200", "border-slate-200", "dark:border-slate-700");
+      }
+      renderProducts();
+    }
+
+    function handleSearch(val) {
+      searchQuery = val.trim().toLowerCase();
+      renderProducts();
+    }
+
+    function handleSort(val) {
+      sortMode = val;
+      renderProducts();
+    }
+
+    function resetFilters() {
+      searchQuery = "";
+      document.getElementById("searchInput").value = "";
+      selectedCategory = "All";
+      selectedDiet = "all";
+      sortMode = "featured";
+      document.getElementById("sortSelect").value = "featured";
+      renderCategoryChips();
+      setDietFilter("all");
+      renderProducts();
+    }
+
+    function scrollToProducts() {
+      document.getElementById("productsSection").scrollIntoView({ behavior: 'smooth' });
+    }
+
+    // --- Products Grid Rendering with Realistic Photos ---
+    function renderProducts() {
+      const grid = document.getElementById("productGrid");
+      const emptyState = document.getElementById("emptyState");
+      const countDisplay = document.getElementById("itemCountDisplay");
+
+      let filtered = products.filter(p => {
+        if (selectedCategory !== "All" && p.category !== selectedCategory) return false;
+        if (selectedDiet !== "all" && p.type !== selectedDiet) return false;
+        if (searchQuery) {
+          const matchName = p.name.toLowerCase().includes(searchQuery);
+          const matchNameMl = p.nameMl ? p.nameMl.toLowerCase().includes(searchQuery) : false;
+          const matchCat = p.category.toLowerCase().includes(searchQuery);
+          if (!matchName && !matchNameMl && !matchCat) return false;
+        }
+        return true;
+      });
+
+      if (sortMode === "price-low") {
+        filtered.sort((a, b) => a.price - b.price);
+      } else if (sortMode === "price-high") {
+        filtered.sort((a, b) => b.price - a.price);
+      } else if (sortMode === "name") {
+        filtered.sort((a, b) => a.name.localeCompare(b.name));
+      }
+
+      countDisplay.innerHTML = currentLang === 'malayalam'
+        ? `ആകെ <strong>${filtered.length}</strong> സാധനങ്ങൾ ലഭ്യമാണ്`
+        : `Showing <strong>${filtered.length}</strong> items in inventory`;
+
+      if (filtered.length === 0) {
+        grid.innerHTML = "";
+        emptyState.classList.remove("hidden");
+        return;
+      }
+
+      emptyState.classList.add("hidden");
+
+      grid.innerHTML = filtered.map(item => {
+        const inCartQty = cart[item.id] || 0;
+        const isOutOfStock = item.inStock === false;
+        const title = (currentLang === 'malayalam' && item.nameMl) ? item.nameMl : item.name;
+        const desc = (currentLang === 'malayalam' && item.descMl) ? item.descMl : (item.desc || 'Fresh product from store.');
+        const imageUrl = item.image || "https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=600&q=80";
+
+        return `
+          <div class="glass-card rounded-3xl p-4 sm:p-5 flex flex-col justify-between hover:shadow-2xl hover:border-emerald-400 transition duration-300 group relative">
+            
+            <!-- Top Badges -->
+            <div class="flex items-center justify-between gap-2 mb-3">
+              <div class="flex items-center gap-1.5 bg-white dark:bg-slate-800 px-2 py-0.5 rounded-md border border-slate-200 dark:border-slate-700 shadow-xs">
+                <span class="fssai-box ${item.type === 'veg' ? 'fssai-veg' : 'fssai-nonveg'}">
+                  <span class="${item.type === 'veg' ? 'fssai-veg-dot' : 'fssai-nonveg-dot'}"></span>
+                </span>
+                <span class="text-[10px] font-black uppercase tracking-wider ${item.type === 'veg' ? 'text-green-700 dark:text-green-400' : 'text-red-600 dark:text-red-400'}">
+                  ${item.type === 'veg' ? 'VEG' : 'NON-VEG'}
+                </span>
+              </div>
+
+              ${item.tag ? `
+                <span class="text-[10px] font-black px-2.5 py-0.5 rounded-full bg-emerald-50 dark:bg-emerald-950 text-emerald-800 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800">
+                  ${item.tag}
+                </span>
+              ` : ''}
+            </div>
+
+            <!-- Realistic Photography -->
+            <div class="w-full h-44 rounded-2xl overflow-hidden relative shadow-sm bg-slate-100 dark:bg-slate-800 flex items-center justify-center">
+              <img 
+                src="${imageUrl}" 
+                alt="${title}" 
+                loading="lazy"
+                onerror="this.onerror=null; this.src='https://placehold.co/600x400/ecfdf5/065f46?text=${encodeURIComponent(item.name)}';"
+                class="w-full h-full object-cover group-hover:scale-105 transition duration-500"
+              />
+              ${isOutOfStock ? `
+                <div class="absolute inset-0 bg-slate-900/75 backdrop-blur-xs flex items-center justify-center">
+                  <span class="text-xs font-black uppercase tracking-wider text-white bg-red-600 px-3 py-1.5 rounded-lg shadow-md">
+                    ${currentLang === 'malayalam' ? 'സ്റ്റോക്കില്ല' : 'Stock Theernnu'}
+                  </span>
+                </div>
+              ` : ''}
+            </div>
+
+            <!-- Details -->
+            <div class="mt-4 flex-1">
+              <p class="text-[10px] uppercase tracking-wider text-emerald-700 dark:text-emerald-400 font-black">${item.category}</p>
+              <h3 class="text-sm sm:text-base font-extrabold text-slate-900 dark:text-white group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition line-clamp-1 mt-0.5">
+                ${title}
+              </h3>
+              <p class="text-xs text-slate-500 dark:text-slate-400 mt-1 line-clamp-2 leading-relaxed font-normal">
+                ${desc}
+              </p>
+            </div>
+
+            <!-- Price & Add -->
+            <div class="mt-4 pt-3.5 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between gap-2">
+              <div>
+                <p class="text-[10px] text-slate-400 font-semibold">${item.unit}:</p>
+                <div class="text-lg font-black text-slate-900 dark:text-white font-display">
+                  ₹${item.price}
+                </div>
+              </div>
+
+              <div>
+                ${isOutOfStock ? `
+                  <button disabled class="px-3 py-1.5 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-400 font-bold text-xs cursor-not-allowed">
+                    Unavailable
+                  </button>
+                ` : inCartQty > 0 ? `
+                  <div class="flex items-center bg-slate-100 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-xl p-0.5 shadow-inner">
+                    <button onclick="changeQty('${item.id}', -1)" class="w-7 h-7 rounded-lg bg-white dark:bg-slate-700 text-slate-800 dark:text-white hover:bg-emerald-600 hover:text-white font-black text-sm flex items-center justify-center transition">
+                      -
+                    </button>
+                    <span class="w-8 text-center text-xs font-black text-slate-900 dark:text-white">${inCartQty}</span>
+                    <button onclick="changeQty('${item.id}', 1)" class="w-7 h-7 rounded-lg bg-white dark:bg-slate-700 text-slate-800 dark:text-white hover:bg-emerald-600 hover:text-white font-black text-sm flex items-center justify-center transition">
+                      +
+                    </button>
+                  </div>
+                ` : `
+                  <button onclick="addToCart('${item.id}')" class="px-3.5 py-2 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 active:scale-95 text-white font-extrabold text-xs flex items-center gap-1.5 transition shadow-sm">
+                    <i data-lucide="plus" class="w-3.5 h-3.5 text-white"></i>
+                    <span>${currentLang === 'malayalam' ? 'ചേർക്കുക' : 'Cart-il Add'}</span>
+                  </button>
+                `}
+              </div>
+            </div>
+
+          </div>
+        `;
+      }).join('');
+
+      lucide.createIcons();
+    }
+
+    // --- Cart Logic & Calculations ---
+    function addToCart(productId) {
+      const product = products.find(p => p.id === productId);
+      if (!product || product.inStock === false) return;
+
+      cart[productId] = (cart[productId] || 0) + 1;
+      saveCartToStorage();
+      renderProducts();
+      const pName = currentLang === 'malayalam' && product.nameMl ? product.nameMl : product.name;
+      showToast(`${pName} ${currentLang === 'malayalam' ? 'കാർട്ടിൽ ചേർത്തു!' : 'Cart-il add aayi!'}`);
+    }
+
+    function changeQty(productId, delta) {
+      if (!cart[productId]) return;
+      cart[productId] += delta;
+      if (cart[productId] <= 0) {
+        delete cart[productId];
+      }
+      saveCartToStorage();
+      renderProducts();
+    }
+
+    function clearCart() {
+      if (Object.keys(cart).length === 0) return;
+      cart = {};
+      saveCartToStorage();
+      renderProducts();
+      showToast(currentLang === 'malayalam' ? "കാർട്ട് കാലിയാക്കി!" : "Cart empty aakki!");
+    }
+
+    function toggleCartDrawer(open) {
+      const drawer = document.getElementById("cartDrawer");
+      const backdrop = document.getElementById("cartDrawerBackdrop");
+
+      if (open) {
+        backdrop.classList.remove("hidden");
+        setTimeout(() => {
+          drawer.classList.remove("translate-x-full");
+        }, 10);
+      } else {
+        drawer.classList.add("translate-x-full");
+        setTimeout(() => {
+          backdrop.classList.add("hidden");
+        }, 300);
+      }
+    }
+
+    function calculateCartTotals() {
+      let subtotal = 0;
+      let totalCount = 0;
+
+      for (const [id, qty] of Object.entries(cart)) {
+        const item = products.find(p => p.id === id);
+        if (item) {
+          subtotal += item.price * qty;
+          totalCount += qty;
+        }
+      }
+
+      const zone = DELIVERY_ZONES[currentLocation] || DELIVERY_ZONES["Malappuram Town"];
+      const isFree = subtotal >= zone.freeThreshold && subtotal > 0;
+      const deliveryFee = subtotal === 0 ? 0 : (isFree ? 0 : zone.charge);
+      const packagingFee = subtotal === 0 ? 0 : 10;
+      const gst = subtotal === 0 ? 0 : Math.round(subtotal * 0.05);
+      const grandTotal = subtotal === 0 ? 0 : subtotal + deliveryFee + packagingFee + gst;
+
+      return { subtotal, totalCount, deliveryFee, packagingFee, gst, grandTotal, isFree };
+    }
+
+    function updateCartUI() {
+      const { subtotal, totalCount, deliveryFee, packagingFee, gst, grandTotal, isFree } = calculateCartTotals();
+
+      document.getElementById("cartCountBadge").innerText = totalCount;
+      document.getElementById("cartSubtitle").innerText = currentLang === 'malayalam'
+        ? `${totalCount} സാധനങ്ങൾ തിരഞ്ഞെടുത്തു`
+        : `${totalCount} item(s) cart-il undu`;
+
+      document.getElementById("cartSubtotal").innerText = `₹${subtotal}`;
+      document.getElementById("cartDeliveryCharge").innerText = isFree ? (currentLang === 'malayalam' ? "സൗജന്യം" : "FREE (Offer)") : `₹${deliveryFee}`;
+      document.getElementById("cartDeliveryCharge").className = isFree ? "font-bold text-emerald-600 dark:text-emerald-400" : "font-bold text-slate-900 dark:text-white";
+      document.getElementById("cartPackingCharge").innerText = `₹${packagingFee}`;
+      document.getElementById("cartGstFee").innerText = `₹${gst}`;
+      document.getElementById("cartTotalSum").innerText = `₹${grandTotal}`;
+
+      const checkoutBtn = document.getElementById("checkoutBtn");
+      checkoutBtn.disabled = totalCount === 0;
+
+      // Update button label depending on payment mode
+      const selectedPay = document.querySelector('input[name="paymentOption"]:checked')?.value || 'COD';
+      const checkoutLabel = document.getElementById("checkoutBtnLabel");
+      if (selectedPay === 'ONLINE') {
+        checkoutLabel.innerText = currentLang === 'malayalam' ? `Pay ₹${grandTotal} Now (ഓൺലൈൻ)` : `Pay ₹${grandTotal} Now (UPI/Card)`;
+      } else {
+        checkoutLabel.innerText = currentLang === 'malayalam' ? `ഓർഡർ ചെയ്യുക (COD ₹${grandTotal})` : `Order Place Cheyyu (₹${grandTotal})`;
+      }
+
+      const listContainer = document.getElementById("cartItemsList");
+      if (totalCount === 0) {
+        listContainer.innerHTML = `
+          <div class="text-center py-12 text-slate-400 space-y-3">
+            <div class="text-5xl">🛒</div>
+            <p class="text-sm font-bold text-slate-800 dark:text-slate-100">${I18N[currentLang].cartEmptyTitle}</p>
+            <p class="text-xs text-slate-500 dark:text-slate-400">${I18N[currentLang].cartEmptyDesc}</p>
+          </div>
+        `;
+        return;
+      }
+
+      listContainer.innerHTML = Object.entries(cart).map(([id, qty]) => {
+        const item = products.find(p => p.id === id);
+        if (!item) return '';
+        const itemTotal = item.price * qty;
+        const title = (currentLang === 'malayalam' && item.nameMl) ? item.nameMl : item.name;
+        const imgUrl = item.image || "https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=200&q=80";
+
+        return `
+          <div class="flex items-center justify-between p-3 rounded-2xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 shadow-xs">
+            <div class="flex items-center gap-3">
+              <img src="${imgUrl}" alt="${title}" class="w-12 h-12 rounded-xl object-cover border border-slate-200 dark:border-slate-700" onerror="this.onerror=null; this.src='https://placehold.co/100x100/ecfdf5/065f46?text=Item';" />
+              <div>
+                <div class="flex items-center gap-1.5">
+                  <span class="fssai-box ${item.type === 'veg' ? 'fssai-veg' : 'fssai-nonveg'}">
+                    <span class="${item.type === 'veg' ? 'fssai-veg-dot' : 'fssai-nonveg-dot'}"></span>
+                  </span>
+                  <h4 class="text-xs font-bold text-slate-900 dark:text-white line-clamp-1">${title}</h4>
+                </div>
+                <p class="text-[11px] text-slate-500 dark:text-slate-400">₹${item.price} / ${item.unit} × ${qty} = <strong class="text-emerald-700 dark:text-emerald-400 font-bold">₹${itemTotal}</strong></p>
+              </div>
+            </div>
+
+            <div class="flex items-center bg-slate-100 dark:bg-slate-700 border border-slate-200 dark:border-slate-600 rounded-xl p-0.5">
+              <button onclick="changeQty('${item.id}', -1)" class="w-6 h-6 rounded-lg text-slate-700 dark:text-slate-200 hover:bg-emerald-600 hover:text-white font-black text-xs flex items-center justify-center transition">
+                -
+              </button>
+              <span class="w-6 text-center text-xs font-bold text-slate-900 dark:text-white">${qty}</span>
+              <button onclick="changeQty('${item.id}', 1)" class="w-6 h-6 rounded-lg text-slate-700 dark:text-slate-200 hover:bg-emerald-600 hover:text-white font-black text-xs flex items-center justify-center transition">
+                +
+              </button>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    // Listen to payment radio change to update button dynamically
+    document.querySelectorAll('input[name="paymentOption"]').forEach(el => {
+      el.addEventListener('change', updateCartUI);
+    });
+
+    // --- Delivery Spot & Dynamic ETA Calculation ---
+    function updateLocation(locName) {
+      if (locName === "Custom Location") {
+        const entered = prompt(currentLang === 'malayalam' ? "ഡെലിവറി ചെയ്യേണ്ട സ്ഥലം നൽകുക:" : "Ningalude delivery sthalam enter cheyyuka (Eg: Kottakkal, Tirur):");
+        if (entered && entered.trim()) {
+          currentLocation = entered.trim();
+          DELIVERY_ZONES[currentLocation] = { eta: "35-45 Mins", charge: 45, freeThreshold: 599 };
+        } else {
+          currentLocation = "Malappuram Town";
+        }
+      } else {
+        currentLocation = locName;
+      }
+
+      document.getElementById("headerLocationSelect").value = locName;
+      document.getElementById("mobileLocationSelect").value = locName;
+
+      updateLocationDisplay();
+      updateCartUI();
+      showToast(`Location set: ${currentLocation}`);
+    }
+
+    function updateLocationDisplay() {
+      const zone = DELIVERY_ZONES[currentLocation] || { eta: "25-30 Mins", charge: 35 };
+
+      document.getElementById("headerEtaText").innerText = `⚡ ${zone.eta} (Charge: ₹${zone.charge})`;
+      document.getElementById("mobileEtaBadge").innerText = `⚡ ${zone.eta}`;
+      document.getElementById("heroEtaText").innerText = `Delivery to ${currentLocation} in ${zone.eta}`;
+
+      document.getElementById("cartLocName").innerText = currentLocation;
+      document.getElementById("cartEtaDuration").innerText = `⚡ ${zone.eta}`;
+      document.getElementById("trackingDestName").innerText = currentLocation;
+    }
+
+    // --- Checkout & Digital Receipt Generator ---
+    function handleCheckout() {
+      const { totalCount, subtotal } = calculateCartTotals();
+      if (totalCount === 0 || subtotal === 0) {
+        showToast("Cart is empty!");
+        return;
+      }
+
+      toggleCartDrawer(false);
+      populateDigitalReceipt();
+      document.getElementById("receiptModal").classList.remove("hidden");
+    }
+
+    function populateDigitalReceipt() {
+      const { subtotal, deliveryFee, packagingFee, gst, grandTotal } = calculateCartTotals();
+      const invoiceNo = `NS-${Math.floor(1000 + Math.random() * 9000)}`;
+      const now = new Date();
+      const dateStr = now.toLocaleDateString("en-IN", { day: '2-digit', month: 'short', year: 'numeric' }) + " " + now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+      const payOption = document.querySelector('input[name="paymentOption"]:checked')?.value || 'COD';
+      const payText = payOption === 'ONLINE' ? 'Pay Now (UPI / Online Paid)' : 'Cash on Delivery (COD)';
+
+      document.getElementById("billInvoiceNo").innerText = `INV: #${invoiceNo}`;
+      document.getElementById("billDate").innerText = dateStr;
+      document.getElementById("rcptSubtotal").innerText = `₹${subtotal}`;
+      document.getElementById("rcptDelivery").innerText = deliveryFee === 0 ? "FREE" : `₹${deliveryFee}`;
+      document.getElementById("rcptPacking").innerText = `₹${packagingFee}`;
+      document.getElementById("rcptGst").innerText = `₹${gst}`;
+      document.getElementById("rcptGrandTotal").innerText = `₹${grandTotal}`;
+      document.getElementById("rcptSpot").innerText = currentLocation;
+      document.getElementById("rcptPaymentMode").innerText = payText;
+
+      const rcptList = document.getElementById("receiptItemList");
+      rcptList.innerHTML = Object.entries(cart).map(([id, qty]) => {
+        const item = products.find(p => p.id === id);
+        if (!item) return '';
+        const itemTotal = item.price * qty;
+        const name = (currentLang === 'malayalam' && item.nameMl) ? item.nameMl : item.name;
+        return `
+          <div class="flex justify-between items-center text-[11px] py-0.5">
+            <span class="truncate pr-2">${name} x${qty}</span>
+            <span class="font-bold text-slate-900 dark:text-white shrink-0">₹${itemTotal}</span>
+          </div>
+        `;
+      }).join('');
+
+      document.getElementById("trackingOrderNumber").innerText = `Order #${invoiceNo}`;
+    }
+
+    function closeReceiptModal() {
+      document.getElementById("receiptModal").classList.add("hidden");
+    }
+
+    function generateBillSummaryText() {
+      const { subtotal, grandTotal, deliveryFee, packagingFee, gst } = calculateCartTotals();
+      const invoice = document.getElementById("billInvoiceNo").innerText;
+      const payMode = document.getElementById("rcptPaymentMode").innerText;
+      
+      let summaryText = `*NAMMUDE SUPERMARKET / നമ്മുടെ സൂപ്പർമാർക്കറ്റ്*\n${invoice}\nSpot: ${currentLocation}\nPayment: ${payMode}\n------------------------\n`;
+      for (const [id, qty] of Object.entries(cart)) {
+        const item = products.find(p => p.id === id);
+        if (item) {
+          summaryText += `- ${item.name} x ${qty} = ₹${item.price * qty}\n`;
+        }
+      }
+      summaryText += `------------------------\nSubtotal: ₹${subtotal}\nDelivery: ₹${deliveryFee}\nPacking: ₹${packagingFee}\nGST (5%): ₹${gst}\n*GRAND TOTAL: ₹${grandTotal}*\n\nStatus: Out for Delivery with Shaji!`;
+      return summaryText;
+    }
+
+    function copyReceiptDetails() {
+      const summaryText = generateBillSummaryText();
+      const tempTextarea = document.createElement("textarea");
+      tempTextarea.value = summaryText;
+      document.body.appendChild(tempTextarea);
+      tempTextarea.select();
+      try {
+        document.execCommand("copy");
+        showToast("Bill details copied to clipboard!");
+      } catch (err) {
+        showToast("Copy error!");
+      }
+      document.body.removeChild(tempTextarea);
+    }
+
+    function shareOnWhatsApp() {
+      const summaryText = generateBillSummaryText();
+      const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(summaryText)}`;
+      window.open(whatsappUrl, "_blank");
+    }
+
+    // --- Live Delivery Order Tracking ---
+    function openLiveTrackingAfterCheckout() {
+      closeReceiptModal();
+      cart = {};
+      saveCartToStorage();
+      renderProducts();
+
+      currentTrackingStage = 2;
+      updateTrackingStagesUI();
+      startTrackingTimer();
+      document.getElementById("trackingModal").classList.remove("hidden");
+    }
+
+    function closeTrackingModal() {
+      document.getElementById("trackingModal").classList.add("hidden");
+      if (trackingInterval) clearInterval(trackingInterval);
+    }
+
+    function startTrackingTimer() {
+      if (trackingInterval) clearInterval(trackingInterval);
+      trackingTimerSeconds = 1125;
+
+      trackingInterval = setInterval(() => {
+        if (trackingTimerSeconds > 0) {
+          trackingTimerSeconds--;
+          const mins = Math.floor(trackingTimerSeconds / 60);
+          const secs = trackingTimerSeconds % 60;
+          document.getElementById("trackingTimerDisplay").innerText = `${mins} Mins ${secs < 10 ? '0' : ''}${secs} Secs`;
+        } else {
+          clearInterval(trackingInterval);
+          currentTrackingStage = 4;
+          updateTrackingStagesUI();
+        }
+      }, 1000);
+    }
+
+    function simulateFastForwardTracking() {
+      currentTrackingStage++;
+      if (currentTrackingStage > 4) currentTrackingStage = 1;
+      updateTrackingStagesUI();
+    }
+
+    function updateTrackingStagesUI() {
+      const step2 = document.getElementById("step-2");
+      const step3 = document.getElementById("step-3");
+      const step4 = document.getElementById("step-4");
+      const progressFill = document.getElementById("trackingProgressFill");
+
+      step2.classList.add("opacity-60");
+      step3.classList.add("opacity-60");
+      step4.classList.add("opacity-40");
+
+      if (currentTrackingStage === 1) {
+        progressFill.style.width = "25%";
+      } else if (currentTrackingStage === 2) {
+        step2.classList.remove("opacity-60");
+        document.getElementById("step-2-indicator").className = "w-6 h-6 rounded-full bg-emerald-600 text-white font-black text-xs flex items-center justify-center shrink-0 mt-0.5 animate-pulse";
+        progressFill.style.width = "50%";
+      } else if (currentTrackingStage === 3) {
+        step2.classList.remove("opacity-60");
+        step3.classList.remove("opacity-60");
+        document.getElementById("step-2-indicator").innerHTML = "✓";
+        document.getElementById("step-2-indicator").className = "w-6 h-6 rounded-full bg-emerald-600 text-white font-black text-xs flex items-center justify-center shrink-0 mt-0.5";
+        document.getElementById("step-3-indicator").className = "w-6 h-6 rounded-full bg-emerald-600 text-white font-black text-xs flex items-center justify-center shrink-0 mt-0.5 animate-bounce";
+        progressFill.style.width = "75%";
+      } else if (currentTrackingStage >= 4) {
+        step2.classList.remove("opacity-60");
+        step3.classList.remove("opacity-60");
+        step4.classList.remove("opacity-40");
+        document.getElementById("step-3-indicator").innerHTML = "✓";
+        document.getElementById("step-4-indicator").innerHTML = "🎉";
+        document.getElementById("step-4-indicator").className = "w-6 h-6 rounded-full bg-emerald-600 text-white font-black text-xs flex items-center justify-center shrink-0 mt-0.5";
+        progressFill.style.width = "100%";
+        document.getElementById("trackingTimerDisplay").innerText = currentLang === 'malayalam' ? "സാധനം വീട്ടിലെത്തി!" : "Veettil Ethi (Delivered)!";
+      }
+    }
+
+    function callDeliveryPartner() {
+      showToast("Calling Shaji (Delivery Partner) +91 98470 54321...");
+    }
+
+    // --- SECURE STAFF ADMIN LOGIN (No password hints shown anywhere) ---
+    function openStaffModal() {
+      document.getElementById("staffPasswordInput").value = "";
+      document.getElementById("loginErrorMsg").classList.add("hidden");
+      document.getElementById("staffLoginModal").classList.remove("hidden");
+      setTimeout(() => document.getElementById("staffPasswordInput").focus(), 100);
+    }
+
+    function closeStaffModal() {
+      document.getElementById("staffLoginModal").classList.add("hidden");
+    }
+
+    function togglePasswordVisibility() {
+      const input = document.getElementById("staffPasswordInput");
+      const icon = document.getElementById("pwdEyeIcon");
+      if (input.type === "password") {
+        input.type = "text";
+        icon.setAttribute("data-lucide", "eye-off");
+      } else {
+        input.type = "password";
+        icon.setAttribute("data-lucide", "eye");
+      }
+      lucide.createIcons();
+    }
+
+    function handleStaffLogin() {
+      const pwd = document.getElementById("staffPasswordInput").value;
+      // High-security password check
+      if (pwd === SECURE_ADMIN_HASH_KEY) {
+        closeStaffModal();
+        openStaffDashboard();
+        showToast("Staff / Admin Authenticated!");
+      } else {
+        document.getElementById("loginErrorMsg").classList.remove("hidden");
+      }
+    }
+
+    function openStaffDashboard() {
+      renderAdminInventory();
+      document.getElementById("staffDashboardModal").classList.remove("hidden");
+    }
+
+    function closeStaffDashboard() {
+      document.getElementById("staffDashboardModal").classList.add("hidden");
+    }
+
+    function renderAdminInventory() {
+      const tbody = document.getElementById("adminInventoryTableBody");
+      tbody.innerHTML = products.map((item) => {
+        const photoUrl = item.image || "https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=150&q=80";
+        return `
+          <tr class="hover:bg-slate-50 dark:hover:bg-slate-800 transition">
+            <td class="p-3">
+              <div class="flex items-center gap-3">
+                <img src="${photoUrl}" alt="${item.name}" class="w-10 h-10 rounded-xl object-cover border border-slate-200 dark:border-slate-700" onerror="this.onerror=null; this.src='https://placehold.co/80x80/ecfdf5/065f46?text=Item';" />
+                <div>
+                  <p class="font-bold text-slate-900 dark:text-white">${item.name}</p>
+                  <p class="text-[10px] text-slate-500 dark:text-slate-400 font-malayalam">${item.nameMl || ''} (${item.unit})</p>
+                </div>
+              </div>
+            </td>
+            <td class="p-3 font-medium">${item.category}</td>
+            <td class="p-3">
+              <span class="inline-flex items-center gap-1 text-[10px] font-bold ${item.type === 'veg' ? 'text-green-700' : 'text-red-600'}">
+                <span class="fssai-box ${item.type === 'veg' ? 'fssai-veg' : 'fssai-nonveg'}">
+                  <span class="${item.type === 'veg' ? 'fssai-veg-dot' : 'fssai-nonveg-dot'}"></span>
+                </span>
+                ${item.type.toUpperCase()}
+              </span>
+            </td>
+            <td class="p-3 font-bold text-slate-900 dark:text-white">₹${item.price}</td>
+            <td class="p-3">
+              <button onclick="toggleStockStatus('${item.id}')" class="px-2.5 py-1 rounded-lg text-[10px] font-black uppercase transition ${
+                item.inStock !== false 
+                  ? 'bg-emerald-100 dark:bg-emerald-950 text-emerald-800 dark:text-emerald-300 border border-emerald-300 dark:border-emerald-800' 
+                  : 'bg-red-100 dark:bg-red-950 text-red-800 dark:text-red-300 border border-red-300 dark:border-red-900'
+              }">
+                ${item.inStock !== false ? 'In Stock' : 'Out of Stock'}
+              </button>
+            </td>
+            <td class="p-3 text-right space-x-1">
+              <button onclick="editProductPrompt('${item.id}')" class="p-1.5 rounded-lg bg-slate-100 dark:bg-slate-700 hover:bg-slate-200 text-slate-700 dark:text-slate-200" title="Edit">
+                <i data-lucide="edit-3" class="w-3.5 h-3.5"></i>
+              </button>
+              <button onclick="deleteProduct('${item.id}')" class="p-1.5 rounded-lg bg-red-50 dark:bg-red-950 hover:bg-red-100 text-red-600" title="Delete">
+                <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
+              </button>
+            </td>
+          </tr>
+        `;
+      }).join('');
+      lucide.createIcons();
+    }
+
+    function toggleStockStatus(id) {
+      const item = products.find(p => p.id === id);
+      if (item) {
+        item.inStock = !(item.inStock !== false);
+        saveProductsToStorage();
+        renderAdminInventory();
+        renderProducts();
+        showToast(`${item.name} stock toggled!`);
+      }
+    }
+
+    function deleteProduct(id) {
+      const item = products.find(p => p.id === id);
+      if (confirm(`'${item.name}' catalog-il ninnu delete cheyyano?`)) {
+        products = products.filter(p => p.id !== id);
+        delete cart[id];
+        saveProductsToStorage();
+        saveCartToStorage();
+        renderAdminInventory();
+        renderProducts();
+        showToast("Item deleted from inventory!");
+      }
+    }
+
+    function openAddNewItemForm() {
+      document.getElementById("adminItemFormContainer").classList.remove("hidden");
+      document.getElementById("adminFormHeading").innerText = "Puthiya Product Catalog-il Cherkkuka";
+      document.getElementById("editProductId").value = "";
+      document.getElementById("formItemName").value = "";
+      document.getElementById("formItemNameMl").value = "";
+      document.getElementById("formItemPrice").value = "";
+      document.getElementById("formItemUnit").value = "1 Kg";
+      document.getElementById("formItemImage").value = "";
+    }
+
+    function closeAdminForm() {
+      document.getElementById("adminItemFormContainer").classList.add("hidden");
+    }
+
+    function editProductPrompt(id) {
+      const item = products.find(p => p.id === id);
+      if (!item) return;
+
+      document.getElementById("adminItemFormContainer").classList.remove("hidden");
+      document.getElementById("adminFormHeading").innerText = `Edit: ${item.name}`;
+      document.getElementById("editProductId").value = item.id;
+      document.getElementById("formItemName").value = item.name;
+      document.getElementById("formItemNameMl").value = item.nameMl || item.name;
+      document.getElementById("formItemPrice").value = item.price;
+      document.getElementById("formItemUnit").value = item.unit;
+      document.getElementById("formItemCategory").value = item.category;
+      document.getElementById("formItemType").value = item.type;
+      document.getElementById("formItemImage").value = item.image || "";
+    }
+
+    function saveProduct(event) {
+      event.preventDefault();
+      const editId = document.getElementById("editProductId").value;
+      const name = document.getElementById("formItemName").value.trim();
+      const nameMl = document.getElementById("formItemNameMl").value.trim() || name;
+      const price = parseFloat(document.getElementById("formItemPrice").value);
+      const unit = document.getElementById("formItemUnit").value.trim();
+      const category = document.getElementById("formItemCategory").value;
+      const type = document.getElementById("formItemType").value;
+      const image = document.getElementById("formItemImage").value.trim() || "https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=600&q=80";
+
+      if (!name || isNaN(price)) return;
+
+      if (editId) {
+        const item = products.find(p => p.id === editId);
+        if (item) {
+          item.name = name;
+          item.nameMl = nameMl;
+          item.price = price;
+          item.unit = unit;
+          item.category = category;
+          item.type = type;
+          item.image = image;
+        }
+      } else {
+        const newProduct = {
+          id: `prod-${Date.now()}`,
+          name,
+          nameMl,
+          category,
+          type,
+          price,
+          unit,
+          image,
+          inStock: true,
+          tag: "New Arrival",
+          desc: "Freshly added item.",
+          descMl: "സ്റ്റോറിൽ പുതുതായി ചേർത്തത്."
+        };
+        products.unshift(newProduct);
+      }
+
+      saveProductsToStorage();
+      renderAdminInventory();
+      renderProducts();
+      closeAdminForm();
+      showToast(editId ? "Product details updated!" : "Puthiya item add cheythu!");
+    }
+
+    // --- Toast Helper ---
+    let toastTimeout;
+    function showToast(message) {
+      const toast = document.getElementById("toastNotification");
+      const text = document.getElementById("toastMessage");
+      text.innerText = message;
+
+      toast.classList.remove("translate-y-24", "opacity-0");
+      toast.classList.add("translate-y-0", "opacity-100");
+
+      if (toastTimeout) clearTimeout(toastTimeout);
+      toastTimeout = setTimeout(() => {
+        toast.classList.remove("translate-y-0", "opacity-100");
+        toast.classList.add("translate-y-24", "opacity-0");
+      }, 2500);
+    }
+  </script>
+</body>
+</html>
